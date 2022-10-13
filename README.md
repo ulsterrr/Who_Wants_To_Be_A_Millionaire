@@ -13,7 +13,7 @@ Môn học mang lại nhiệt huyết cao và phát triển trên con đường 
 Dart là ngôn ngữ lập trình cho Flutter- bộ công cụ giao diện người dùng của Google để xây dựng 
 các ứng dụng Mobile, Web và Desktop app đẹp, được biên dịch nguyên bản từ một cơ sở mã code duy nhất.
 
-### Flutter
+## Flutter
 
 Flutter là mobile UI framework của Google để tạo ra các giao diện chất lượng cao trên iOS và Android trong khoảng thời gian ngắn. 
 Flutter hoạt động với những code sẵn có được sử dụng bởi các lập trình viên, các tổ chức.
