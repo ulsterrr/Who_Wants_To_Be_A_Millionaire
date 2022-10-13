@@ -1,9 +1,16 @@
-# Who_Wants_To_Be_A_Millionaire
-Trò chơi Ai Là Triệu Phú
-được viết bằng ngôn ngữ Dart và Flutter.
+# who_wants_to_be_a_millionaire
 
-Flutter là một framework giao diện người dùng di động mã nguồn mở miễn phí. Được tạo ra bởi Google và phát hành vào tháng 5 năm 2017. 
-Nói một cách dễ hiểu, nó cho phép bạn tạo một ứng dụng di động gốc chỉ với một codebase.
+A new Flutter project.
 
-Dart là ngôn ngữ lập trình cho Flutter - bộ công cụ giao diện người dùng của Google để xây dựng các ứng dụng Mobile, Web và Desktop app đẹp,
-được biên dịch nguyên bản từ một cơ sở mã code duy nhất.
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
