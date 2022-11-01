@@ -1,16 +1,29 @@
-# who_wants_to_be_a_millionaire
+# Who Wants To Be A Millionaire
 
-A new Flutter project.
+## Đồ án môn Lập Trình Di Động
 
-## Getting Started
+Môn học mang lại nhiệt huyết cao và phát triển trên con đường lập trình.
 
-This project is a starting point for a Flutter application.
+  - Được viết bằng ngôn ngữ Dart và framework Flutter.
+  - Hướng dẫn bởi giảng viên Lê Viết Hoàng Nguyên thuộc Khoa Công Nghệ Thông Tin - Cao Đẳng Kỹ Thuật Cao Thắng.
+  - Sự tham gia của các thành viên nhóm đồ án.
 
-A few resources to get you started if this is your first Flutter project:
+## Dart
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Dart là ngôn ngữ lập trình cho Flutter- bộ công cụ giao diện người dùng của Google để xây dựng 
+các ứng dụng Mobile, Web và Desktop app đẹp, được biên dịch nguyên bản từ một cơ sở mã code duy nhất.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Flutter
+
+Flutter là mobile UI framework của Google để tạo ra các giao diện chất lượng cao trên iOS và Android trong khoảng thời gian ngắn. 
+Flutter hoạt động với những code sẵn có được sử dụng bởi các lập trình viên, các tổ chức.
+Flutter hoàn toàn miễn phí và cũng là mã nguồn mở.
+
+### Hình ảnh minh hoạ:
+
+> Các hình ảnh sẽ được cập nhật trong quá trình triển khai đồ án
+
+Please waiting...
+
+> 
+> 
