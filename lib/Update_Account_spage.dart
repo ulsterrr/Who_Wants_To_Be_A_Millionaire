@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:who_wants_to_be_a_millionaire/Forgot_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Home_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Signup_spage.dart';
 
-class LoginApp extends StatelessWidget {
-  void click() {}
+class AccountSpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Text('Cập nhật tài khoản'), backgroundColor: Colors.cyan),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -30,15 +28,15 @@ class LoginApp extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 80,
-                width: 400,
+                height: 20,
+                width: 550,
               ),
               const SizedBox(
                 height: 10,
               ),
               Container(
                 width: 325,
-                height: 530,
+                height: 550,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -47,24 +45,43 @@ class LoginApp extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/ailatrieuphu.png'),
+                      backgroundImage: AssetImage('images/avt1.jpg'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Chọn ảnh đại diện",
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      "Đăng nhập tài khoản của bạn",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: 260,
+                      height: 60,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            suffix: Icon(
+                              FontAwesomeIcons.user,
+                              color: Colors.red,
+                            ),
+                            labelText: "Username",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            )),
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Container(
                       width: 260,
@@ -75,7 +92,7 @@ class LoginApp extends StatelessWidget {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            labelText: "Email",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -83,7 +100,7 @@ class LoginApp extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 15,
                     ),
                     Container(
                       width: 260,
@@ -102,34 +119,29 @@ class LoginApp extends StatelessWidget {
                             )),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ForgotSpage()),
-                              );
-                            },
-                            child: const Text(
-                              "Quên mật khẩu",
-                              style: TextStyle(color: Colors.blueAccent),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      width: 260,
+                      height: 60,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            suffix: Icon(
+                              FontAwesomeIcons.eyeSlash,
+                              color: Colors.red,
                             ),
-                          )
-                        ],
+                            labelText: "Xác nhận mật khẩu",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            )),
                       ),
                     ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
@@ -146,7 +158,7 @@ class LoginApp extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
-                            'Đăng nhập',
+                            'Cập nhật',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -156,54 +168,8 @@ class LoginApp extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Bạn chưa có tài khoản?',
-                          style: TextStyle(
-                              color: Colors.black, fontStyle: FontStyle.normal),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignupSpage()),
-                            );
-                          },
-                          child: Text(
-                            'Tạo tài khoản',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueAccent),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                            onPressed: click,
-                            icon: const Icon(FontAwesomeIcons.facebook,
-                                color: Colors.blue)),
-                        IconButton(
-                            onPressed: click,
-                            icon: const Icon(
-                              FontAwesomeIcons.google,
-                              color: Colors.redAccent,
-                            )),
-                        IconButton(
-                            onPressed: click,
-                            icon: const Icon(
-                              FontAwesomeIcons.twitter,
-                              color: Colors.cyan,
-                            )),
-                      ],
-                    )
                   ],
                 ),
               )
