@@ -8,7 +8,40 @@ class CreditSpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(''), backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 170,
+              color: Colors.blueAccent,
+              child: Text(
+                'Username',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Container(
+              child: Text(
+                '2.000',
+                style: TextStyle(color: Colors.yellowAccent),
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                FontAwesomeIcons.gem,
+                color: Colors.yellowAccent,
+              ),
+            )
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
             height: MediaQuery.of(context).size.height,
@@ -24,41 +57,8 @@ class CreditSpage extends StatelessWidget {
                 ])),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Username',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 80,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        '2.000',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.yellowAccent),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        FontAwesomeIcons.gem,
-                        color: Colors.yellowAccent,
-                      ),
-                    )
-                  ],
-                ),
                 const SizedBox(
-                  height: 50,
+                  height: 180,
                 ),
                 Neon(
                   text: 'Mua Credit',
@@ -76,11 +76,8 @@ class CreditSpage extends StatelessWidget {
                       height: 10,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 50,
                       width: 400,
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     Container(
                       width: 325,
@@ -90,7 +87,7 @@ class CreditSpage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       child: Container(
-                        padding: EdgeInsets.all(11.0),
+                        padding: EdgeInsets.all(10.0),
                         child: GridView.builder(
                           itemCount: 4,
                           gridDelegate:

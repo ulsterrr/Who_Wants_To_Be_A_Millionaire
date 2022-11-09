@@ -10,6 +10,12 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(''),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -30,7 +36,7 @@ class LoginApp extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 80,
+                height: 100,
                 width: 400,
               ),
               const SizedBox(

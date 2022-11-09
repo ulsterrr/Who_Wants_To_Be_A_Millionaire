@@ -8,7 +8,40 @@ class HistorySpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(''), backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 170,
+              color: Colors.blueAccent,
+              child: Text(
+                'Username',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Container(
+              child: Text(
+                '2.000',
+                style: TextStyle(color: Colors.yellowAccent),
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                FontAwesomeIcons.gem,
+                color: Colors.yellowAccent,
+              ),
+            )
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
             height: MediaQuery.of(context).size.height,
@@ -24,41 +57,8 @@ class HistorySpage extends StatelessWidget {
                 ])),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Username',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 80,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        '2.000',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.yellowAccent),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        FontAwesomeIcons.gem,
-                        color: Colors.yellowAccent,
-                      ),
-                    )
-                  ],
-                ),
                 const SizedBox(
-                  height: 50,
+                  height: 150,
                 ),
                 Neon(
                   text: 'XẾP HẠNG',
@@ -76,36 +76,49 @@ class HistorySpage extends StatelessWidget {
                       height: 10,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 50,
                       width: 400,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      width: 325,
-                      height: 380,
+                      width: 300,
+                      height: 300,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       child: ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) => Card(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage('images/avt1.jpg'),
-                            ),
-                            title: Text('Họ tên'),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [],
-                            ),
-                            onTap: () {},
-                          ),
-                        ),
-                      ),
-                    )
+                          itemCount: 5,
+                          itemBuilder: (context, index) => Card(
+                                child: Container(
+                                  width: 300,
+                                  height: 50,
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        child: Text((index + 1).toString()),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      CircleAvatar(
+                                        backgroundImage:
+                                            AssetImage('images/avt1.jpg'),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('Họ tên'),
+                                      const SizedBox(
+                                        height: 10,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )),
+                    ),
                   ],
                 ),
               ],

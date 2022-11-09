@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:who_wants_to_be_a_millionaire/Credit_spage.dart';
 import 'package:who_wants_to_be_a_millionaire/Forgot_spage.dart';
+import 'package:who_wants_to_be_a_millionaire/LinhVucPage.dart';
 import 'package:who_wants_to_be_a_millionaire/History_spage.dart';
 import 'package:who_wants_to_be_a_millionaire/Signup_spage.dart';
 import 'package:who_wants_to_be_a_millionaire/Update_Account_spage.dart';
@@ -12,6 +13,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(''),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -87,9 +94,9 @@ class HomePage extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              ' 20000',
+                              ' 2000',
                               style: TextStyle(
-                                color: Colors.yellow,
+                                color: Colors.yellowAccent,
                               ),
                             )
                           ],
@@ -136,6 +143,13 @@ class HomePage extends StatelessWidget {
                       height: 10,
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LinhVucPage()),
+                        );
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,

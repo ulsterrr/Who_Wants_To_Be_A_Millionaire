@@ -6,8 +6,12 @@ class SignupSpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text('Tạo tài khoản'), backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Text('Tạo tài khoản'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -28,7 +32,7 @@ class SignupSpage extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 20,
+                height: 100,
                 width: 550,
               ),
               const SizedBox(
@@ -54,13 +58,6 @@ class SignupSpage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    // const Text(
-                    //   "Tạo tài khoản",
-                    //   style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
                     const SizedBox(
                       height: 10,
                     ),

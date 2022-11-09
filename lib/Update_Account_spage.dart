@@ -7,7 +7,11 @@ class AccountSpage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Cập nhật tài khoản'), backgroundColor: Colors.cyan),
+        title: Text('Cập nhật tài khoản'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -28,7 +32,7 @@ class AccountSpage extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 20,
+                height: 100,
                 width: 550,
               ),
               const SizedBox(
@@ -68,6 +72,7 @@ class AccountSpage extends StatelessWidget {
                       width: 260,
                       height: 60,
                       child: const TextField(
+                        readOnly: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
