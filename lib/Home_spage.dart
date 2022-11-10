@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
                             Text(
                               ' 2000',
                               style: TextStyle(
-                                color: Colors.yellowAccent,
+                                color: Colors.orangeAccent,
                               ),
                             )
                           ],

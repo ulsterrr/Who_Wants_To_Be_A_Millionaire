@@ -64,7 +64,7 @@ class CreditSpage extends StatelessWidget {
                   text: 'Mua Credit',
                   color: Colors.red,
                   fontSize: 35,
-                  font: NeonFont.TextMeOne,
+                  font: NeonFont.NightClub70s,
                   flickeringText: true,
                   flickeringLetters: null,
                   glowingDuration: new Duration(seconds: 1),

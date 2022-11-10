@@ -65,19 +65,19 @@ class LinhVucPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 130,
                 ),
                 Neon(
                   text: 'Điểm : 0',
                   color: Colors.red,
                   fontSize: 35,
-                  font: NeonFont.TextMeOne,
+                  font: NeonFont.NightClub70s,
                   flickeringText: true,
                   flickeringLetters: null,
                   glowingDuration: new Duration(seconds: 1),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Text(
                   'Câu hỏi',
@@ -95,135 +95,31 @@ class LinhVucPage extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                   child: Text(
-                    '5',
+                    '0',
                     style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 Text('Chọn lĩnh vực',
                     style: TextStyle(color: Colors.white, fontSize: 20)),
                 const SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 250,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color.fromARGB(255, 2, 1, 71),
-                              Colors.cyan,
-                              Color.fromARGB(255, 1, 25, 44),
-                            ])),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text(
-                        lsTitle[1],
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
+                buildButton(context, lsTitle[0]),
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 250,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color.fromARGB(255, 2, 1, 71),
-                              Colors.cyan,
-                              Color.fromARGB(255, 1, 25, 44),
-                            ])),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text(
-                        lsTitle[2],
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
+                buildButton(context, lsTitle[1]),
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 250,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color.fromARGB(255, 2, 1, 71),
-                              Colors.cyan,
-                              Color.fromARGB(255, 1, 25, 44),
-                            ])),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text(
-                        lsTitle[3],
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
+                buildButton(context, lsTitle[2]),
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 250,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color.fromARGB(255, 2, 1, 71),
-                              Colors.cyan,
-                              Color.fromARGB(255, 1, 25, 44),
-                            ])),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text(
-                        lsTitle[0],
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
+                buildButton(context, lsTitle[3]),
                 const SizedBox(
                   height: 15,
                 ),
@@ -232,4 +128,32 @@ class LinhVucPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildButton(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {},
+    child: Container(
+      alignment: Alignment.center,
+      width: 250,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color.fromARGB(255, 32, 31, 128),
+                Color.fromARGB(255, 20, 133, 148),
+                Color.fromARGB(255, 2, 55, 99),
+              ])),
+      child: Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
+  );
 }
