@@ -61,7 +61,7 @@ class HistorySpage extends StatelessWidget {
                   height: 150,
                 ),
                 Neon(
-                  text: 'XẾP HẠNG',
+                  text: 'Xếp Hạng',
                   color: Colors.red,
                   fontSize: 35,
                   font: NeonFont.NightClub70s,

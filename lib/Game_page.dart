@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
-import 'package:who_wants_to_be_a_millionaire/Game_page.dart';
 
-class LinhVucPage extends StatelessWidget {
+class GamePage extends StatelessWidget {
   List<String> lsTitle = [
-    'Khoa học - kỹ thuật',
-    'Phim ảnh',
-    'Văn hóa - xã hội',
-    'Lịch sử - địa lí'
+    'Tài nguyên giữ vị trí quan trọng nhất Việt Nam hiện nay là:',
+    'Tài nguyên đất',
+    'Tài nguyên sinh vật',
+    'Tài nguyên nước',
+    'Tài nguyên khoáng sản',
+    'Tài nguyên đất'
   ];
   @override
   Widget build(BuildContext context) {
@@ -96,21 +97,21 @@ class LinhVucPage extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                   child: Text(
-                    '0',
+                    '1',
                     style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                Text('Chọn lĩnh vực',
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
-                const SizedBox(
-                  height: 30,
+                Container(
+                  width: 275,
+                  alignment: Alignment.center,
+                  child: Text(lsTitle[0],
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
                 ),
-                buildButton(context, lsTitle[0]),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 buildButton(context, lsTitle[1]),
                 const SizedBox(
@@ -122,8 +123,39 @@ class LinhVucPage extends StatelessWidget {
                 ),
                 buildButton(context, lsTitle[3]),
                 const SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
+                buildButton(context, lsTitle[4]),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(FontAwesomeIcons.phone,
+                            color: Colors.white)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.bar_chart,
+                          color: Colors.white,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.refresh_outlined,
+                          color: Colors.white,
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '50:50',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ],
+                )
               ],
             )),
       ),
@@ -133,12 +165,7 @@ class LinhVucPage extends StatelessWidget {
 
 Widget buildButton(BuildContext context, String title) {
   return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => GamePage()),
-      );
-    },
+    onTap: () {},
     child: Container(
       alignment: Alignment.center,
       width: 250,
