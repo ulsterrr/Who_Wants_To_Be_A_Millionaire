@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:who_wants_to_be_a_millionaire/Login_spage.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginApp(),
+      home: LoginPage(),
     );
   }
 }

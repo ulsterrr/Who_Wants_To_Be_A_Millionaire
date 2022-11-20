@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:who_wants_to_be_a_millionaire/Credit_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Forgot_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/LinhVucPage.dart';
-import 'package:who_wants_to_be_a_millionaire/History_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Signup_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Update_Account_spage.dart';
+
+import 'Credit_page.dart';
+import 'History_page.dart';
+import 'LinhVucPage.dart';
+import 'Signup_page.dart';
+import 'update_account_page.dart';
 
 class HomePage extends StatelessWidget {
   void click() {}
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignupSpage()),
+                                  builder: (context) => SignupPage()),
                             );
                           },
                           child: Text(
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AccountSpage()),
+                              builder: (context) => AccountPage()),
                         );
                       },
                       child: Container(
@@ -183,7 +183,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistorySpage()),
+                              builder: (context) => HistoryPage()),
                         );
                       },
                       child: Container(
@@ -219,7 +219,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistorySpage()),
+                              builder: (context) => HistoryPage()),
                         );
                       },
                       child: Container(
@@ -254,8 +254,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => CreditSpage()),
+                          MaterialPageRoute(builder: (context) => CreditPage()),
                         );
                       },
                       child: Container(

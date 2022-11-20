@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 
-class CreditSpage extends StatelessWidget {
+class CreditPage extends StatelessWidget {
   void click() {}
   @override
   Widget build(BuildContext context) {

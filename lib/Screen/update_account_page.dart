@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ForgotSpage extends StatelessWidget {
-  void click() {}
+class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quên mật khẩu'),
+        title: Text('Cập nhật tài khoản'),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -34,14 +33,14 @@ class ForgotSpage extends StatelessWidget {
               ),
               SizedBox(
                 height: 100,
-                width: 400,
+                width: 550,
               ),
               const SizedBox(
                 height: 10,
               ),
               Container(
                 width: 325,
-                height: 380,
+                height: 550,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -50,11 +49,18 @@ class ForgotSpage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/ailatrieuphu.png'),
+                      backgroundImage: AssetImage('images/avt1.jpg'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Chọn ảnh đại diện",
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -66,12 +72,13 @@ class ForgotSpage extends StatelessWidget {
                       width: 260,
                       height: 60,
                       child: const TextField(
+                        readOnly: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào tên đăng nhập",
+                            labelText: "Username",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -79,7 +86,7 @@ class ForgotSpage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 15,
                     ),
                     Container(
                       width: 260,
@@ -90,7 +97,7 @@ class ForgotSpage extends StatelessWidget {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            labelText: "Email",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -98,7 +105,46 @@ class ForgotSpage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 15,
+                    ),
+                    Container(
+                      width: 260,
+                      height: 60,
+                      child: const TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            suffix: Icon(
+                              FontAwesomeIcons.eyeSlash,
+                              color: Colors.red,
+                            ),
+                            labelText: "Nhập vào mật khẩu",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      width: 260,
+                      height: 60,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            suffix: Icon(
+                              FontAwesomeIcons.eyeSlash,
+                              color: Colors.red,
+                            ),
+                            labelText: "Xác nhận mật khẩu",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
                     ),
                     GestureDetector(
                       child: Container(
@@ -117,7 +163,7 @@ class ForgotSpage extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
-                            'Quên mật khẩu',
+                            'Cập nhật',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -127,7 +173,7 @@ class ForgotSpage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 17,
+                      height: 10,
                     ),
                   ],
                 ),
