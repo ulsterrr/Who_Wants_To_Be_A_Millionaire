@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Login_w_google.dart';
 
+import '../service/firebase_auth_service.dart';
 import 'Forgot_page.dart';
 import 'Home_page.dart';
 import 'Signup_page.dart';
@@ -19,6 +21,7 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   final _auth = FirebaseAuth.instance;
+
   void click() {}
   @override
   Widget build(BuildContext context) {
@@ -96,7 +99,8 @@ class LoginPageState extends State<LoginPage> {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            hintText: "Nhập vào email",
+                            labelText: "Email",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -117,7 +121,8 @@ class LoginPageState extends State<LoginPage> {
                               FontAwesomeIcons.eyeSlash,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào mật khẩu",
+                            hintText: 'Nhập vào mật khẩu',
+                            labelText: "Mật Khẩu",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -234,7 +239,13 @@ class LoginPageState extends State<LoginPage> {
                             icon: const Icon(FontAwesomeIcons.facebook,
                                 color: Colors.blue)),
                         IconButton(
-                            onPressed: click,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginGooglePage()),
+                              );
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.google,
                               color: Colors.redAccent,
@@ -249,7 +260,10 @@ class LoginPageState extends State<LoginPage> {
                     )
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 35,
+              ),
             ],
           ),
         ),

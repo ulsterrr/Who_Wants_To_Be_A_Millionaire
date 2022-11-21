@@ -77,7 +77,7 @@ class SignupPage extends StatelessWidget {
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào tên đăng nhập",
+                            labelText: "Nhập vào họ tên",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -97,7 +97,8 @@ class SignupPage extends StatelessWidget {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            hintText: "Nhập vào email",
+                            labelText: "Email",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -118,7 +119,8 @@ class SignupPage extends StatelessWidget {
                               FontAwesomeIcons.eyeSlash,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào mật khẩu",
+                            hintText: "Nhập vào mật khẩu",
+                            labelText: "Mật Khẩu",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),

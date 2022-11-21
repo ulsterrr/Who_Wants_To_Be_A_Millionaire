@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../service/firebase_auth_service.dart';
+
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,8 @@ class AccountPage extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/avt1.jpg'),
+                      backgroundImage:
+                          NetworkImage(FirebaseAuthService().user.photoURL!),
                     ),
                     TextButton(
                       onPressed: () {},
@@ -71,14 +74,15 @@ class AccountPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
                         readOnly: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText: "Username",
+                            labelText:
+                                'Name: ${FirebaseAuthService().user.displayName}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -91,13 +95,15 @@ class AccountPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        readOnly: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Email",
+                            labelText:
+                                'Email: ${FirebaseAuthService().user.email}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),

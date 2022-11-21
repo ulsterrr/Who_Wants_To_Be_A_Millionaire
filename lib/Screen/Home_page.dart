@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../service/firebase_auth_service.dart';
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
@@ -72,7 +73,8 @@ class HomePage extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/avt1.jpg'),
+                      backgroundImage:
+                          NetworkImage(FirebaseAuthService().user.photoURL!),
                     ),
                     const SizedBox(
                       height: 10,
@@ -89,7 +91,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            'Username',
+                            'Name: ${FirebaseAuthService().user.displayName}',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 16, 64, 148)),

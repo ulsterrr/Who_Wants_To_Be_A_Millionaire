@@ -62,22 +62,22 @@ class ForgotPage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: const TextField(
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.red,
-                            ),
-                            labelText: "Nhập vào tên đăng nhập",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
+                    // Container(
+                    //   width: 260,
+                    //   height: 60,
+                    //   child: const TextField(
+                    //     decoration: InputDecoration(
+                    //         suffix: Icon(
+                    //           FontAwesomeIcons.user,
+                    //           color: Colors.red,
+                    //         ),
+                    //         labelText: "Nhập vào tên đăng nhập",
+                    //         border: OutlineInputBorder(
+                    //           borderRadius:
+                    //               BorderRadius.all(Radius.circular(8)),
+                    //         )),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 12,
                     ),
