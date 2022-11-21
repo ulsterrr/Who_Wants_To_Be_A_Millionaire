@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
+  final _auth = FirebaseAuth.instance;
   void click() {}
   @override
   Widget build(BuildContext context) {
@@ -143,11 +146,32 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
+                      onTap: () async {
+                        try {
+                          final newUser = _auth.createUserWithEmailAndPassword(
+                              email: txtEmail.text, password: txtPass.text);
+                          _auth.authStateChanges().listen((event) {
+                            if (event != null) {
+                              txtEmail.clear();
+                              txtPass.clear();
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                'home',
+                                (route) => false,
+                              );
+                            } else {
+                              final snackBar = SnackBar(
+                                  content:
+                                      Text('Email hoặc mật khẩu không đúng'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          });
+                        } catch (e) {
+                          final snackBar =
+                              SnackBar(content: Text('Lỗi kết nối server'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,

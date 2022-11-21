@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,7 +15,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, 'welcome', (route) => false);
+                },
+                icon: Icon(FontAwesomeIcons.arrowAltCircleRight)),
+          ],
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),

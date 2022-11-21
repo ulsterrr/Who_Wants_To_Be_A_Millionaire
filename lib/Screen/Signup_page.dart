@@ -1,8 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignupPage extends StatelessWidget {
+  TextEditingController txtName = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
+  TextEditingController txtCPass = TextEditingController();
+  final _authe = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +70,8 @@ class SignupPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtName,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
@@ -83,7 +90,8 @@ class SignupPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtEmail,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
@@ -102,7 +110,8 @@ class SignupPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtPass,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
@@ -122,7 +131,9 @@ class SignupPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtCPass,
+                        obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.eyeSlash,
@@ -139,6 +150,33 @@ class SignupPage extends StatelessWidget {
                       height: 15,
                     ),
                     GestureDetector(
+                      onTap: () async {
+                        if (txtPass == txtCPass) {
+                          final snackBar =
+                              SnackBar(content: Text('Mật khẩu trùng khớp!'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          try {
+                            final newUser =
+                                _authe.createUserWithEmailAndPassword(
+                                    email: txtEmail.text,
+                                    password: txtPass.text);
+                            if (newUser != null) {
+                              Navigator.pop(context, 'Đăng ký thành công!');
+                            } else {
+                              final snackBar = SnackBar(
+                                  content: Text('Tài khoản không hợp lệ'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          } catch (e) {
+                            final snackBar =
+                                SnackBar(content: Text('Có lỗi xảy ra!'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        }
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
