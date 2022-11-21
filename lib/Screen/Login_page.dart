@@ -6,7 +6,16 @@ import 'Forgot_page.dart';
 import 'Home_page.dart';
 import 'Signup_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return LoginPageState();
+  }
+}
+
+class LoginPageState extends State<LoginPage> {
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
   void click() {}
   @override
   Widget build(BuildContext context) {
@@ -76,7 +85,9 @@ class LoginPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtEmail,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
@@ -95,7 +106,8 @@ class LoginPage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtPass,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
