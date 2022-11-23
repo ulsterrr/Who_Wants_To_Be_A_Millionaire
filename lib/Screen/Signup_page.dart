@@ -2,8 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignupPage extends StatelessWidget {
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
   TextEditingController txtName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
@@ -153,9 +165,9 @@ class SignupPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        if (txtPass == txtCPass) {
-                          final snackBar =
-                              SnackBar(content: Text('Mật khẩu trùng khớp!'));
+                        if (txtPass.text != txtCPass.text) {
+                          final snackBar = SnackBar(
+                              content: Text('Mật khẩu không trùng khớp!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           try {
@@ -164,6 +176,8 @@ class SignupPage extends StatelessWidget {
                                     email: txtEmail.text,
                                     password: txtPass.text);
                             if (newUser != null) {
+                              _authe.currentUser!
+                                  .updateDisplayName(txtName.text);
                               Navigator.pop(context, 'Đăng ký thành công!');
                             } else {
                               final snackBar = SnackBar(
@@ -215,7 +229,9 @@ class SignupPage extends StatelessWidget {
                             icon: const Icon(FontAwesomeIcons.facebook,
                                 color: Colors.blue)),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              signInWithGoogle();
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.google,
                               color: Colors.redAccent,

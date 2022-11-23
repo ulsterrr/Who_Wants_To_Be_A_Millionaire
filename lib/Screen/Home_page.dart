@@ -2,15 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/profire_page.dart';
 
-import '../service/firebase_auth_service.dart';
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
 import 'Signup_page.dart';
-import 'update_account_page.dart';
 
 class HomePage extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   void click() {}
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   Navigator.pushNamedAndRemoveUntil(
-                      context, 'welcome', (route) => false);
+                      context, 'login', (route) => false);
                 },
                 icon: Icon(FontAwesomeIcons.arrowAltCircleRight)),
           ],
@@ -73,8 +73,11 @@ class HomePage extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage:
-                          NetworkImage(FirebaseAuthService().user.photoURL!),
+                      backgroundImage: NetworkImage(_auth
+                                  .currentUser!.photoURL ==
+                              null
+                          ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+                          : _auth.currentUser!.photoURL!),
                     ),
                     const SizedBox(
                       height: 10,
@@ -82,20 +85,13 @@ class HomePage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignupPage()),
-                            );
-                          },
-                          child: Text(
-                            'Name: ${FirebaseAuthService().user.displayName}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 16, 64, 148)),
-                          ),
+                        Text(
+                          _auth.currentUser!.displayName == null
+                              ? 'Username'
+                              : _auth.currentUser!.displayName!,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 16, 64, 148)),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +121,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AccountPage()),
+                              builder: (context) => ProfirePage()),
                         );
                       },
                       child: Container(

@@ -3,11 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/Login_w_google.dart';
-
-import '../service/firebase_auth_service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'Forgot_page.dart';
-import 'Home_page.dart';
 import 'Signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +12,17 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return LoginPageState();
   }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 class LoginPageState extends State<LoginPage> {
@@ -153,7 +161,7 @@ class LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: () async {
                         try {
-                          final newUser = _auth.createUserWithEmailAndPassword(
+                          final newUser = _auth.signInWithEmailAndPassword(
                               email: txtEmail.text, password: txtPass.text);
                           _auth.authStateChanges().listen((event) {
                             if (event != null) {
@@ -239,12 +247,8 @@ class LoginPageState extends State<LoginPage> {
                             icon: const Icon(FontAwesomeIcons.facebook,
                                 color: Colors.blue)),
                         IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginGooglePage()),
-                              );
+                            onPressed: () async {
+                              signInWithGoogle();
                             },
                             icon: const Icon(
                               FontAwesomeIcons.google,

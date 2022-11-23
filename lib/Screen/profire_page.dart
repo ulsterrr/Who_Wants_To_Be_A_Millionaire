@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../service/firebase_auth_service.dart';
-
-class AccountPage extends StatelessWidget {
+class ProfirePage extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +51,15 @@ class AccountPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage:
-                          NetworkImage(FirebaseAuthService().user.photoURL!),
+                      backgroundImage: NetworkImage(_auth
+                                  .currentUser!.photoURL ==
+                              null
+                          ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+                          : _auth.currentUser!.photoURL!),
                     ),
                     TextButton(
                       onPressed: () {},
@@ -64,12 +67,6 @@ class AccountPage extends StatelessWidget {
                         "Chọn ảnh đại diện",
                         style: TextStyle(color: Colors.blueAccent),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     Container(
                       width: 260,
@@ -81,8 +78,8 @@ class AccountPage extends StatelessWidget {
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText:
-                                'Name: ${FirebaseAuthService().user.displayName}',
+                            hintText:
+                                'Name: ${_auth.currentUser!.displayName == null ? 'Username' : _auth.currentUser!.displayName!}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -102,8 +99,8 @@ class AccountPage extends StatelessWidget {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText:
-                                'Email: ${FirebaseAuthService().user.email}',
+                            hintText:
+                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.displayName!}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
