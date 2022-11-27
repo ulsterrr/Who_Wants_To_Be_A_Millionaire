@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfirePage extends StatelessWidget {
+  TextEditingController txtName = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
+  TextEditingController txtCPass = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,7 @@ class ProfirePage extends StatelessWidget {
                       width: 260,
                       height: 60,
                       child: TextField(
-                        readOnly: true,
+                        controller: txtName,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
@@ -100,7 +103,7 @@ class ProfirePage extends StatelessWidget {
                               color: Colors.red,
                             ),
                             hintText:
-                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.displayName!}',
+                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.email!}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -113,7 +116,8 @@ class ProfirePage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtPass,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
@@ -133,7 +137,8 @@ class ProfirePage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtCPass,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.eyeSlash,
@@ -150,6 +155,26 @@ class ProfirePage extends StatelessWidget {
                       height: 15,
                     ),
                     GestureDetector(
+                      onTap: () {
+                        if (txtPass.text != txtCPass.text) {
+                          final snackBar = SnackBar(
+                              content: Text('Mật khẩu không trùng khớp!'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          try {
+                            final user =
+                                _auth.currentUser!.updatePassword(txtPass.text);
+                            final snackBar = SnackBar(content: Text('susses'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } catch (e) {
+                            final snackBar =
+                                SnackBar(content: Text('Có lỗi xảy ra!'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        }
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,

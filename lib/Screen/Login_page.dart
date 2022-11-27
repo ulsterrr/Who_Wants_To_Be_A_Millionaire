@@ -248,7 +248,20 @@ class LoginPageState extends State<LoginPage> {
                                 color: Colors.blue)),
                         IconButton(
                             onPressed: () async {
-                              signInWithGoogle();
+                              var user = await signInWithGoogle();
+                              print('\n\n$user\n\n');
+                              if (user != null) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  'home',
+                                  (route) => false,
+                                );
+                              } else {
+                                final snackBar =
+                                    SnackBar(content: Text('Lỗi Đăng Nhập'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             },
                             icon: const Icon(
                               FontAwesomeIcons.google,

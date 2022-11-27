@@ -175,9 +175,11 @@ class SignupPage extends StatelessWidget {
                                 _authe.createUserWithEmailAndPassword(
                                     email: txtEmail.text,
                                     password: txtPass.text);
+                            await _authe.signInWithEmailAndPassword(
+                                email: txtEmail.text, password: txtPass.text);
+                            _authe.currentUser!.updateDisplayName(txtName.text);
+                            _authe.signOut();
                             if (newUser != null) {
-                              _authe.currentUser!
-                                  .updateDisplayName(txtName.text);
                               Navigator.pop(context, 'Đăng ký thành công!');
                             } else {
                               final snackBar = SnackBar(

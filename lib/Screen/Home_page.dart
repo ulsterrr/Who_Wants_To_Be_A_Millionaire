@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/profire_page.dart';
 
 import 'Credit_page.dart';
@@ -22,6 +23,7 @@ class HomePage extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
+                  GoogleSignIn().signOut();
                   Navigator.pushNamedAndRemoveUntil(
                       context, 'login', (route) => false);
                 },

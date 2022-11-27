@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "190501863714-v3gtpgbkbv6k656ptfdqf7tn78j88h9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.who_wants_to_be_a_millionaire",
+            "certificate_hash": "de289fae12ff8670eae420b22f9cce65c6c27a7e"
+          }
+        },
+        {
           "client_id": "190501863714-vj21709rsg4vd68lvtnnl13qpbp6mea2.apps.googleusercontent.com",
           "client_type": 3
         }
