@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class GamePage extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   List<String> lsTitle = [
     'Tài nguyên giữ vị trí quan trọng nhất Việt Nam hiện nay là:',
     'Tài nguyên đất',
@@ -23,8 +25,12 @@ class GamePage extends StatelessWidget {
               width: 180,
               color: Colors.blueAccent,
               child: Text(
-                'Username',
-                style: TextStyle(color: Colors.white),
+                _auth.currentUser!.displayName == null
+                    ? 'Username'
+                    : _auth.currentUser!.displayName!,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 16, 64, 148)),
               ),
             ),
             const SizedBox(

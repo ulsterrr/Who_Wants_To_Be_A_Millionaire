@@ -21,6 +21,7 @@ class SignupPage extends StatelessWidget {
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtCPass = TextEditingController();
   final _authe = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,10 +75,7 @@ class SignupPage extends StatelessWidget {
                       backgroundImage: AssetImage('images/ailatrieuphu.png'),
                     ),
                     const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Container(
                       width: 260,
@@ -167,12 +165,20 @@ class SignupPage extends StatelessWidget {
                       onTap: () async {
                         if (txtPass.text != txtCPass.text) {
                           final snackBar = SnackBar(
-                              content: Text('Mật khẩu không trùng khớp!'));
+                            content: Text(
+                              'Mật khẩu không trùng khớp!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           try {
                             final newUser =
-                                _authe.createUserWithEmailAndPassword(
+                                await _authe.createUserWithEmailAndPassword(
                                     email: txtEmail.text,
                                     password: txtPass.text);
                             await _authe.signInWithEmailAndPassword(
@@ -183,13 +189,29 @@ class SignupPage extends StatelessWidget {
                               Navigator.pop(context, 'Đăng ký thành công!');
                             } else {
                               final snackBar = SnackBar(
-                                  content: Text('Tài khoản không hợp lệ'));
+                                content: Text(
+                                  'Tài khoản không hợp lệ!',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                              );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             }
                           } catch (e) {
-                            final snackBar =
-                                SnackBar(content: Text('Có lỗi xảy ra!'));
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Có lỗi xảy ra!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                            );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }

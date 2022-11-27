@@ -174,15 +174,30 @@ class LoginPageState extends State<LoginPage> {
                               );
                             } else {
                               final snackBar = SnackBar(
-                                  content:
-                                      Text('Email hoặc mật khẩu không đúng'));
+                                content: Text(
+                                  'Email hoặc mật khẩu không đúng',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                              );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             }
                           });
                         } catch (e) {
-                          final snackBar =
-                              SnackBar(content: Text('Lỗi kết nối server'));
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Lỗi kết nối!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
@@ -257,8 +272,16 @@ class LoginPageState extends State<LoginPage> {
                                   (route) => false,
                                 );
                               } else {
-                                final snackBar =
-                                    SnackBar(content: Text('Lỗi Đăng Nhập'));
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    'Lỗi đăng nhập!',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }

@@ -158,18 +158,43 @@ class ProfirePage extends StatelessWidget {
                       onTap: () {
                         if (txtPass.text != txtCPass.text) {
                           final snackBar = SnackBar(
-                              content: Text('Mật khẩu không trùng khớp!'));
+                            content: Text(
+                              'Mật khẩu không trùng khớp!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           try {
-                            final user =
-                                _auth.currentUser!.updatePassword(txtPass.text);
-                            final snackBar = SnackBar(content: Text('susses'));
+                            _auth.currentUser!.updatePassword(txtPass.text);
+                            _auth.currentUser!.updateDisplayName(txtName.text);
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Cập nhật thành công!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.greenAccent,
+                            );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           } catch (e) {
-                            final snackBar =
-                                SnackBar(content: Text('Có lỗi xảy ra!'));
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Có lỗi xảy ra!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                            );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }
