@@ -1,13 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SignupSpage extends StatelessWidget {
+class ProfirePage extends StatelessWidget {
+  TextEditingController txtName = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
+  TextEditingController txtCPass = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text('Tạo tài khoản'), backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Text('Cập nhật tài khoản'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -28,7 +37,7 @@ class SignupSpage extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 20,
+                height: 100,
                 width: 550,
               ),
               const SizedBox(
@@ -45,35 +54,35 @@ class SignupSpage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/ailatrieuphu.png'),
+                      backgroundImage: NetworkImage(_auth
+                                  .currentUser!.photoURL ==
+                              null
+                          ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+                          : _auth.currentUser!.photoURL!),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // const Text(
-                    //   "Tạo tài khoản",
-                    //   style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      height: 10,
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Chọn ảnh đại diện",
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtName,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào tên đăng nhập",
+                            hintText:
+                                'Name: ${_auth.currentUser!.displayName == null ? 'Username' : _auth.currentUser!.displayName!}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -86,13 +95,15 @@ class SignupSpage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        readOnly: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            hintText:
+                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.email!}',
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -105,7 +116,8 @@ class SignupSpage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtPass,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
@@ -125,7 +137,8 @@ class SignupSpage extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtCPass,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.eyeSlash,
@@ -142,6 +155,51 @@ class SignupSpage extends StatelessWidget {
                       height: 15,
                     ),
                     GestureDetector(
+                      onTap: () {
+                        if (txtPass.text != txtCPass.text) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Mật khẩu không trùng khớp!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          try {
+                            _auth.currentUser!.updatePassword(txtPass.text);
+                            _auth.currentUser!.updateDisplayName(txtName.text);
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Cập nhật thành công!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.greenAccent,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } catch (e) {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Có lỗi xảy ra!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        }
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
@@ -158,7 +216,7 @@ class SignupSpage extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
-                            'Đăng ký',
+                            'Cập nhật',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -170,27 +228,6 @@ class SignupSpage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(FontAwesomeIcons.facebook,
-                                color: Colors.blue)),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              FontAwesomeIcons.google,
-                              color: Colors.redAccent,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              FontAwesomeIcons.twitter,
-                              color: Colors.cyan,
-                            )),
-                      ],
-                    )
                   ],
                 ),
               )

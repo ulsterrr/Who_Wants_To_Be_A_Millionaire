@@ -1,18 +1,45 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:who_wants_to_be_a_millionaire/Forgot_spage.dart';
-import 'package:who_wants_to_be_a_millionaire/Signup_spage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'Forgot_page.dart';
+import 'Signup_page.dart';
 
-class LoginApp extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return LoginPageState();
+  }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+class LoginPageState extends State<LoginPage> {
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
   void click() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Đăng nhập'),
-        backgroundColor: Colors.cyan,
+        title: Text(''),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
       ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -33,7 +60,7 @@ class LoginApp extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 50,
+                height: 100,
                 width: 400,
               ),
               const SizedBox(
@@ -59,26 +86,29 @@ class LoginApp extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    // const Text(
-                    //   "Đăng nhập tài khoản của bạn",
-                    //   style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
+                    const Text(
+                      "Đăng nhập tài khoản của bạn",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      ),
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtEmail,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào email",
+                            hintText: "Nhập vào email",
+                            labelText: "Email",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -91,14 +121,16 @@ class LoginApp extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: txtPass,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.eyeSlash,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào mật khẩu",
+                            hintText: 'Nhập vào mật khẩu',
+                            labelText: "Mật Khẩu",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -115,7 +147,7 @@ class LoginApp extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ForgotSpage()),
+                                    builder: (context) => ForgotPage()),
                               );
                             },
                             child: const Text(
@@ -127,6 +159,48 @@ class LoginApp extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
+                      onTap: () async {
+                        try {
+                          final newUser = _auth.signInWithEmailAndPassword(
+                              email: txtEmail.text, password: txtPass.text);
+                          _auth.authStateChanges().listen((event) {
+                            if (event != null) {
+                              txtEmail.clear();
+                              txtPass.clear();
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                'home',
+                                (route) => false,
+                              );
+                            } else {
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Email hoặc mật khẩu không đúng',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          });
+                        } catch (e) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Lỗi kết nối!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
@@ -168,7 +242,7 @@ class LoginApp extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignupSpage()),
+                                  builder: (context) => SignupPage()),
                             );
                           },
                           child: Text(
@@ -188,7 +262,30 @@ class LoginApp extends StatelessWidget {
                             icon: const Icon(FontAwesomeIcons.facebook,
                                 color: Colors.blue)),
                         IconButton(
-                            onPressed: click,
+                            onPressed: () async {
+                              var user = await signInWithGoogle();
+                              print('\n\n$user\n\n');
+                              if (user != null) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  'home',
+                                  (route) => false,
+                                );
+                              } else {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    'Lỗi đăng nhập!',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.google,
                               color: Colors.redAccent,
@@ -203,7 +300,10 @@ class LoginApp extends StatelessWidget {
                     )
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 35,
+              ),
             ],
           ),
         ),

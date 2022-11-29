@@ -1,14 +1,72 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ForgotSpage extends StatelessWidget {
-  void click() {}
+class ForgotPage extends StatefulWidget {
+  const ForgotPage({Key? key}) : super(key: key);
+
+  @override
+  State<ForgotPage> createState() => ForgotPageState();
+}
+
+class ForgotPageState extends State<ForgotPage> {
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> resetPassword() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: _emailController.text.trim());
+      final snackBar = SnackBar(
+        content: Text(
+          'Gửi Email đặt lại mật khẩu!',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+        backgroundColor: Colors.greenAccent,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      final snackBar = SnackBar(
+        content: Text(
+          e.message.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text('Quên mật khẩu'), backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Text('Quên mật khẩu'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -29,7 +87,7 @@ class ForgotSpage extends StatelessWidget {
                 height: 50,
               ),
               SizedBox(
-                height: 80,
+                height: 100,
                 width: 400,
               ),
               const SizedBox(
@@ -53,41 +111,13 @@ class ForgotSpage extends StatelessWidget {
                       backgroundImage: AssetImage('images/ailatrieuphu.png'),
                     ),
                     const SizedBox(
-                      height: 10,
-                    ),
-                    // const Text(
-                    //   "Quên mật khẩu",
-                    //   style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      height: 10,
+                      height: 32,
                     ),
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.red,
-                            ),
-                            labelText: "Nhập vào tên đăng nhập",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
@@ -104,6 +134,35 @@ class ForgotSpage extends StatelessWidget {
                       height: 12,
                     ),
                     GestureDetector(
+                      onTap: () {
+                        if (_emailController.text.isEmpty) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Email hoặc mật khẩu không đúng',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else if (!_emailController.text.contains('@')) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Định dạng Email không hợp lệ!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+
+                        resetPassword();
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
