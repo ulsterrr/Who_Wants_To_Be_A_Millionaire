@@ -160,7 +160,6 @@ class ForgotPageState extends State<ForgotPage> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
-
                         resetPassword();
                       },
                       child: Container(

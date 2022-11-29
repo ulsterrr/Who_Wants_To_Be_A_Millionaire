@@ -29,6 +29,11 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   final _auth = FirebaseAuth.instance;
+  bool _passwordVisible = true;
+  @override
+  void initState() {
+    _passwordVisible = false;
+  }
 
   void click() {}
   @override
@@ -63,12 +68,9 @@ class LoginPageState extends State<LoginPage> {
                 height: 100,
                 width: 400,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 width: 325,
-                height: 530,
+                height: 550,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -123,11 +125,20 @@ class LoginPageState extends State<LoginPage> {
                       height: 60,
                       child: TextField(
                         controller: txtPass,
-                        obscureText: true,
+                        obscureText: !_passwordVisible,
                         decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.eyeSlash,
-                              color: Colors.red,
+                            suffix: IconButton(
+                              icon: Icon(
+                                _passwordVisible
+                                    ? FontAwesomeIcons.eye
+                                    : FontAwesomeIcons.eyeSlash,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
                             ),
                             hintText: 'Nhập vào mật khẩu',
                             labelText: "Mật Khẩu",

@@ -2,31 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class SignupPage extends StatelessWidget {
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
+class EditProfirePage extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtOLDPass = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtCPass = TextEditingController();
-  final _authe = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tạo tài khoản'),
+        title: Text('Cập nhật tài khoản'),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -48,18 +36,15 @@ class SignupPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 50,
+                height: 60,
               ),
               SizedBox(
                 height: 100,
                 width: 550,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 width: 325,
-                height: 550,
+                height: 500,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -68,14 +53,22 @@ class SignupPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('images/ailatrieuphu.png'),
+                      backgroundImage: NetworkImage(_auth
+                                  .currentUser!.photoURL ==
+                              null
+                          ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+                          : _auth.currentUser!.photoURL!),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Chọn ảnh đại diện",
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                     Container(
                       width: 260,
@@ -87,28 +80,7 @@ class SignupPage extends StatelessWidget {
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào họ tên",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: TextField(
-                        controller: txtEmail,
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.red,
-                            ),
-                            hintText: "Nhập vào email",
-                            labelText: "Email",
+                            labelText: "Nhập vào tên!",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -129,8 +101,7 @@ class SignupPage extends StatelessWidget {
                               FontAwesomeIcons.eyeSlash,
                               color: Colors.red,
                             ),
-                            hintText: "Nhập vào mật khẩu",
-                            labelText: "Mật Khẩu",
+                            labelText: "Nhập vào mật khẩu mới",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -145,7 +116,6 @@ class SignupPage extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: txtCPass,
-                        obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.eyeSlash,
@@ -162,7 +132,7 @@ class SignupPage extends StatelessWidget {
                       height: 15,
                     ),
                     GestureDetector(
-                      onTap: () async {
+                      onTap: () {
                         if (txtPass.text != txtCPass.text) {
                           final snackBar = SnackBar(
                             content: Text(
@@ -175,11 +145,12 @@ class SignupPage extends StatelessWidget {
                             backgroundColor: Colors.red,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        } else if (txtPass.text.length < 6 &&
-                            txtCPass.text.length < 6) {
+                        } else if (txtName.text.isEmpty &&
+                            txtCPass.text.isEmpty &&
+                            txtPass.text.isEmpty) {
                           final snackBar = SnackBar(
                             content: Text(
-                              'Mật khẩu ít nhất 6 ký tự!',
+                              'Vui lòng nhập thông tin!',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -190,30 +161,20 @@ class SignupPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           try {
-                            final newUser =
-                                await _authe.createUserWithEmailAndPassword(
-                                    email: txtEmail.text,
-                                    password: txtPass.text);
-                            await _authe.signInWithEmailAndPassword(
-                                email: txtEmail.text, password: txtPass.text);
-                            _authe.currentUser!.updateDisplayName(txtName.text);
-                            _authe.signOut();
-                            if (newUser != null) {
-                              Navigator.pop(context, 'Đăng ký thành công!');
-                            } else {
-                              final snackBar = SnackBar(
-                                content: Text(
-                                  'Tài khoản không hợp lệ!',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                  ),
+                            _auth.currentUser!.updatePassword(txtPass.text);
+                            _auth.currentUser!.updateDisplayName(txtName.text);
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Cập nhật thành công!',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
                                 ),
-                                backgroundColor: Colors.red,
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
+                              ),
+                              backgroundColor: Colors.greenAccent,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           } catch (e) {
                             final snackBar = SnackBar(
                               content: Text(
@@ -246,7 +207,7 @@ class SignupPage extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
-                            'Đăng ký',
+                            'Cập nhật',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -258,29 +219,6 @@ class SignupPage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(FontAwesomeIcons.facebook,
-                                color: Colors.blue)),
-                        IconButton(
-                            onPressed: () {
-                              signInWithGoogle();
-                            },
-                            icon: const Icon(
-                              FontAwesomeIcons.google,
-                              color: Colors.redAccent,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              FontAwesomeIcons.twitter,
-                              color: Colors.cyan,
-                            )),
-                      ],
-                    )
                   ],
                 ),
               )

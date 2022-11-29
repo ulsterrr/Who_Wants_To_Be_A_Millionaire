@@ -12,7 +12,6 @@ import 'Signup_page.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  void click() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +26,7 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamedAndRemoveUntil(
                       context, 'login', (route) => false);
                 },
-                icon: Icon(FontAwesomeIcons.arrowAltCircleRight)),
+                icon: Icon(Icons.exit_to_app_outlined)),
           ],
         ),
         backgroundColor: Colors.transparent,

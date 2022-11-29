@@ -3,16 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'edit_profile_page.dart';
+
 class ProfirePage extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtCPass = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cập nhật tài khoản'),
+        title: Text('Thông tin tài khoản'),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -34,18 +37,15 @@ class ProfirePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 50,
+                height: 100,
               ),
               SizedBox(
                 height: 100,
                 width: 550,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 width: 325,
-                height: 550,
+                height: 380,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -64,29 +64,18 @@ class ProfirePage extends StatelessWidget {
                           ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
                           : _auth.currentUser!.photoURL!),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Chọn ảnh đại diện",
-                        style: TextStyle(color: Colors.blueAccent),
-                      ),
+                    const SizedBox(
+                      height: 15,
                     ),
                     Container(
                       width: 260,
                       height: 60,
                       child: TextField(
                         controller: txtName,
+                        readOnly: true,
                         decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.red,
-                            ),
-                            hintText:
-                                'Name: ${_auth.currentUser!.displayName == null ? 'Username' : _auth.currentUser!.displayName!}',
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
+                          hintText: '${_auth.currentUser!.displayName!}',
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -98,57 +87,8 @@ class ProfirePage extends StatelessWidget {
                       child: TextField(
                         readOnly: true,
                         decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.red,
-                            ),
-                            hintText:
-                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.email!}',
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: TextField(
-                        controller: txtPass,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.eyeSlash,
-                              color: Colors.red,
-                            ),
-                            labelText: "Nhập vào mật khẩu",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: TextField(
-                        controller: txtCPass,
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.eyeSlash,
-                              color: Colors.red,
-                            ),
-                            labelText: "Xác nhận mật khẩu",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
+                          hintText: '${_auth.currentUser!.email!}',
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -156,49 +96,11 @@ class ProfirePage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (txtPass.text != txtCPass.text) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Mật khẩu không trùng khớp!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        } else {
-                          try {
-                            _auth.currentUser!.updatePassword(txtPass.text);
-                            _auth.currentUser!.updateDisplayName(txtName.text);
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Cập nhật thành công!',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              backgroundColor: Colors.greenAccent,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } catch (e) {
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Có lỗi xảy ra!',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              backgroundColor: Colors.red,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
-                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfirePage()),
+                        );
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -213,21 +115,24 @@ class ProfirePage extends StatelessWidget {
                                   Colors.cyan,
                                   Color.fromARGB(255, 1, 25, 44),
                                 ])),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Cập nhật',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit),
+                              Text(
+                                ' Chỉnh sửa',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    )
                   ],
                 ),
               )
