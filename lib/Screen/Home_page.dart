@@ -3,12 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/profire_page.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/profile_page.dart';
 
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
 import 'Signup_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -117,38 +119,48 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => ProfilePage()),
+                    //     );
+                    //   },
+                    //   child: Container(
+                    //     alignment: Alignment.center,
+                    //     width: 250,
+                    //     decoration: const BoxDecoration(
+                    //         borderRadius: BorderRadius.all(Radius.circular(50)),
+                    //         gradient: LinearGradient(
+                    //             begin: Alignment.centerLeft,
+                    //             end: Alignment.centerRight,
+                    //             colors: [
+                    //               Color.fromARGB(255, 3, 56, 1),
+                    //               Color.fromARGB(255, 2, 243, 82),
+                    //               Color.fromARGB(255, 18, 87, 41),
+                    //             ])),
+                    //     child: const Padding(
+                    //       padding: EdgeInsets.all(12.0),
+                    //       child: Text(
+                    //         'Quản lý tài khoản',
+                    //         style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 20,
+                    //             fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfirePage()),
+                              builder: (context) => ProfilePage()),
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 3, 56, 1),
-                                  Color.fromARGB(255, 2, 243, 82),
-                                  Color.fromARGB(255, 18, 87, 41),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Quản lý tài khoản',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: buildButton(context, 'Quản lý tài khoản'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -161,34 +173,13 @@ class HomePage extends StatelessWidget {
                               builder: (context) => LinhVucPage()),
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 8, 58, 78),
-                                  Colors.cyan,
-                                  Color.fromARGB(255, 41, 27, 233),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Trò chơi mới',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: buildButton(context, 'Trò chơi mới'),
                     ),
+
                     const SizedBox(
                       height: 10,
                     ),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -197,34 +188,12 @@ class HomePage extends StatelessWidget {
                               builder: (context) => HistoryPage()),
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 73, 2, 73),
-                                  Color.fromARGB(255, 243, 66, 234),
-                                  Color.fromARGB(255, 84, 2, 151),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Lịch sử chơi',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: buildButton(context, 'Lịch sử chơi'),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -233,34 +202,12 @@ class HomePage extends StatelessWidget {
                               builder: (context) => HistoryPage()),
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 61, 4, 26),
-                                  Color.fromARGB(255, 233, 65, 79),
-                                  Color.fromARGB(255, 134, 0, 7),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Xem xếp hạng',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: buildButton(context, 'Xem xếp hạng'),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -268,30 +215,7 @@ class HomePage extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => CreditPage()),
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 230, 157, 0),
-                                  Color.fromARGB(255, 255, 239, 12),
-                                  Color.fromARGB(255, 158, 74, 5),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Mua credit',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: buildButton(context, 'Mua Credit'),
                     ),
                     const SizedBox(
                       height: 15,

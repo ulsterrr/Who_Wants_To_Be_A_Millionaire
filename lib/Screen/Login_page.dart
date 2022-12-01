@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
 import 'Forgot_page.dart';
 import 'Signup_page.dart';
 
@@ -169,74 +170,81 @@ class LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        try {
-                          final newUser = _auth.signInWithEmailAndPassword(
-                              email: txtEmail.text, password: txtPass.text);
-                          _auth.authStateChanges().listen((event) {
-                            if (event != null) {
-                              txtEmail.clear();
-                              txtPass.clear();
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                'home',
-                                (route) => false,
-                              );
-                            } else {
-                              final snackBar = SnackBar(
-                                content: Text(
-                                  'Email hoặc mật khẩu không đúng',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                backgroundColor: Colors.red,
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
-                          });
-                        } catch (e) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Lỗi kết nối!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Color.fromARGB(255, 2, 1, 71),
-                                  Colors.cyan,
-                                  Color.fromARGB(255, 1, 25, 44),
-                                ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            'Đăng nhập',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () async {
+                    //     try {
+                    //       final newUser = _auth.signInWithEmailAndPassword(
+                    //           email: txtEmail.text, password: txtPass.text);
+                    //       _auth.authStateChanges().listen((event) {
+                    //         if (event != null) {
+                    //           txtEmail.clear();
+                    //           txtPass.clear();
+                    //           Navigator.pushNamedAndRemoveUntil(
+                    //             context,
+                    //             'home',
+                    //             (route) => false,
+                    //           );
+                    //         } else {
+                    //           final snackBar = SnackBar(
+                    //             content: Text(
+                    //               'Email hoặc mật khẩu không đúng',
+                    //               style: const TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontSize: 18.0,
+                    //               ),
+                    //             ),
+                    //             action: SnackBarAction(
+                    //               label: 'X',
+                    //               textColor: Colors.white,
+                    //               onPressed: () {},
+                    //             ),
+                    //             backgroundColor: Colors.red,
+                    //           );
+                    //           ScaffoldMessenger.of(context)
+                    //               .showSnackBar(snackBar);
+                    //         }
+                    //       });
+                    //     } catch (e) {
+                    //       final snackBar = SnackBar(
+                    //         content: Text(
+                    //           'Lỗi kết nối!',
+                    //           style: const TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 18.0,
+                    //           ),
+                    //         ),
+                    //         backgroundColor: Colors.red,
+                    //       );
+                    //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    //     }
+                    //   },
+                    //   child: Container(
+                    //     alignment: Alignment.center,
+                    //     width: 250,
+                    //     decoration: const BoxDecoration(
+                    //         borderRadius: BorderRadius.all(Radius.circular(50)),
+                    //         gradient: LinearGradient(
+                    //             begin: Alignment.centerLeft,
+                    //             end: Alignment.centerRight,
+                    //             colors: [
+                    //               Color.fromARGB(255, 2, 1, 71),
+                    //               Colors.cyan,
+                    //               Color.fromARGB(255, 1, 25, 44),
+                    //             ])),
+                    //     child: const Padding(
+                    //       padding: EdgeInsets.all(12.0),
+                    //       child: Text(
+                    //         'Đăng nhập',
+                    //         style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 20,
+                    //             fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    buildButtonLogin(
+                        context, 'Đăng nhập', txtPass.text, txtEmail.text),
                     const SizedBox(
                       height: 15,
                     ),

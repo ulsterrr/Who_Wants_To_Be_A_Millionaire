@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'edit_profile_page.dart';
 
-class ProfirePage extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtCPass = TextEditingController();
@@ -71,6 +71,7 @@ class ProfirePage extends StatelessWidget {
                       width: 260,
                       height: 60,
                       child: TextField(
+                        textAlign: TextAlign.center,
                         controller: txtName,
                         readOnly: true,
                         decoration: InputDecoration(
@@ -86,6 +87,7 @@ class ProfirePage extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         readOnly: true,
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: '${_auth.currentUser!.email!}',
                         ),
@@ -120,7 +122,10 @@ class ProfirePage extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.edit),
+                              Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
                               Text(
                                 ' Chỉnh sửa',
                                 style: TextStyle(

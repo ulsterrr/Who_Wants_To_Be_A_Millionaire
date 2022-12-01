@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -41,7 +42,7 @@ class CreditPage extends StatelessWidget {
                 FontAwesomeIcons.gem,
                 color: Colors.yellowAccent,
               ),
-            )
+            ),
           ],
         ),
         backgroundColor: Colors.transparent,
@@ -63,6 +64,14 @@ class CreditPage extends StatelessWidget {
               ])),
           child: Column(
             children: [
+              IconButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    GoogleSignIn().signOut();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'login', (route) => false);
+                  },
+                  icon: Icon(Icons.exit_to_app_outlined)),
               const SizedBox(
                 height: 180,
               ),
