@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProfirePage extends StatelessWidget {
+class EditProfirePage extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
+  TextEditingController txtOLDPass = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtCPass = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,18 +36,15 @@ class ProfirePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 50,
+                height: 60,
               ),
               SizedBox(
                 height: 100,
                 width: 550,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 width: 325,
-                height: 550,
+                height: 500,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -81,29 +80,7 @@ class ProfirePage extends StatelessWidget {
                               FontAwesomeIcons.user,
                               color: Colors.red,
                             ),
-                            hintText:
-                                'Name: ${_auth.currentUser!.displayName == null ? 'Username' : _auth.currentUser!.displayName!}',
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      width: 260,
-                      height: 60,
-                      child: TextField(
-                        readOnly: true,
-                        decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.red,
-                            ),
-                            hintText:
-                                'Email: ${_auth.currentUser!.email == null ? '' : _auth.currentUser!.email!}',
+                            labelText: "Nhập vào tên!",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -124,7 +101,7 @@ class ProfirePage extends StatelessWidget {
                               FontAwesomeIcons.eyeSlash,
                               color: Colors.red,
                             ),
-                            labelText: "Nhập vào mật khẩu",
+                            labelText: "Nhập vào mật khẩu mới",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -160,6 +137,20 @@ class ProfirePage extends StatelessWidget {
                           final snackBar = SnackBar(
                             content: Text(
                               'Mật khẩu không trùng khớp!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else if (txtName.text.isEmpty &&
+                            txtCPass.text.isEmpty &&
+                            txtPass.text.isEmpty) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Vui lòng nhập thông tin!',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,

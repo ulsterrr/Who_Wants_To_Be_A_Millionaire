@@ -175,6 +175,19 @@ class SignupPage extends StatelessWidget {
                             backgroundColor: Colors.red,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else if (txtPass.text.length < 6 &&
+                            txtCPass.text.length < 6) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Mật khẩu ít nhất 6 ký tự!',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           try {
                             final newUser =

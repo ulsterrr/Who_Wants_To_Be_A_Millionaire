@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'button.dart';
+
 class GamePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<String> lsTitle = [
@@ -119,19 +121,31 @@ class GamePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                buildButton(context, lsTitle[1]),
+                GestureDetector(
+                  onTap: () {},
+                  child: buildButton(context, lsTitle[1]),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                buildButton(context, lsTitle[2]),
+                GestureDetector(
+                  onTap: () {},
+                  child: buildButton(context, lsTitle[2]),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                buildButton(context, lsTitle[3]),
+                GestureDetector(
+                  onTap: () {},
+                  child: buildButton(context, lsTitle[3]),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                buildButton(context, lsTitle[4]),
+                GestureDetector(
+                  onTap: () {},
+                  child: buildButton(context, lsTitle[4]),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -167,32 +181,4 @@ class GamePage extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget buildButton(BuildContext context, String title) {
-  return GestureDetector(
-    onTap: () {},
-    child: Container(
-      alignment: Alignment.center,
-      width: 250,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color.fromARGB(255, 32, 31, 128),
-                Color.fromARGB(255, 20, 133, 148),
-                Color.fromARGB(255, 2, 55, 99),
-              ])),
-      child: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Text(
-          title,
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
-  );
 }

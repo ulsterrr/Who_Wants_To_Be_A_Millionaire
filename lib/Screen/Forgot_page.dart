@@ -40,7 +40,6 @@ class ForgotPageState extends State<ForgotPage> {
         backgroundColor: Colors.greenAccent,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       final snackBar = SnackBar(
@@ -54,7 +53,6 @@ class ForgotPageState extends State<ForgotPage> {
         backgroundColor: Colors.red,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context).pop();
     }
   }
 
@@ -134,11 +132,11 @@ class ForgotPageState extends State<ForgotPage> {
                       height: 12,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (_emailController.text.isEmpty) {
                           final snackBar = SnackBar(
                             content: Text(
-                              'Email hoặc mật khẩu không đúng',
+                              'Chưa nhập email',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -160,7 +158,6 @@ class ForgotPageState extends State<ForgotPage> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
-
                         resetPassword();
                       },
                       child: Container(
