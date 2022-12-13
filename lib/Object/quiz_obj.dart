@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class QuizObject {
   final int id;
   final int catetoryId;
@@ -9,7 +11,7 @@ class QuizObject {
   final String answer;
   final int? level;
   final int? point;
-  final DateTime? manyTime;
+  final int manyTime;
 
   QuizObject(
       {required this.id,
@@ -21,7 +23,7 @@ class QuizObject {
       required this.quizAns4,
       required this.answer,
       this.level,
-      this.manyTime,
+      this.manyTime = 0,
       this.point});
 
   QuizObject.fromJson(Map<String, dynamic> r)
@@ -49,6 +51,41 @@ class QuizObject {
       'level': level,
       'manyTime': manyTime,
       'point': point
+    };
+  }
+
+  factory QuizObject.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return QuizObject(
+      id: data?['id'],
+      catetoryId: data?['catetoryId'],
+      question: data?['question'],
+      quizAns1: data?['quizAns1'],
+      quizAns2: data?['quizAns2'],
+      quizAns3: data?['quizAns3'],
+      quizAns4: data?['quizAns4'],
+      answer: data?['answer'],
+      level: data?['level'],
+      manyTime: data?['manyTime'],
+      point: data?['point'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "catetoryId": catetoryId,
+      "question": question,
+      "quizAns1": quizAns1,
+      "quizAns2": quizAns2,
+      "quizAns3": quizAns3,
+      "quizAns4": quizAns4,
+      "answer": answer,
+      if (level != null) "level": level,
+      if (manyTime != null) "manyTime": manyTime,
+      if (point != null) "point": point,
     };
   }
 }

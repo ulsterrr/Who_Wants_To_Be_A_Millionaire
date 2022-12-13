@@ -3,11 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/timebar_for_question.dart';
 
 import 'button.dart';
+import 'dart:async';
 
-class GamePage extends StatelessWidget {
+class GamePage extends StatefulWidget {
+  CategoryObject category;
+  GamePage({Key? key, required this.category}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return GamePageState();
+  }
+}
+
+class GamePageState extends State<GamePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<QuizObject> quiz = [];
+
+  void getLstCauHoi() async {
+    final data = await FireStoreProvider.getCauHoiLV(this.widget.category.id);
+    setState(() {});
+    quiz = data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLstCauHoi();
+  }
+
   List<String> lsTitle = [
     'Tài nguyên giữ vị trí quan trọng nhất Việt Nam hiện nay là:',
     'Tài nguyên đất',
@@ -16,6 +45,29 @@ class GamePage extends StatelessWidget {
     'Tài nguyên khoáng sản',
     'Tài nguyên đất'
   ];
+
+  Timer? timer;
+  Timer? timer2;
+  int number = 1;
+  int score = 0;
+  var scores = [
+    200,
+    400,
+    600,
+    1000,
+    2000,
+    3000,
+    6000,
+    10000,
+    14000,
+    22000,
+    30000,
+    40000,
+    60000,
+    85000,
+    150000
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +127,9 @@ class GamePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 130,
+                  height: 86,
                 ),
+                CustomTimer(quizz: quiz[0],leftSeconds: 20),
                 Neon(
                   text: 'Điểm : 0',
                   color: Colors.red,
@@ -115,7 +168,7 @@ class GamePage extends StatelessWidget {
                 Container(
                   width: 275,
                   alignment: Alignment.center,
-                  child: Text(lsTitle[0],
+                  child: Text(quiz[1].question,
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                 ),
                 const SizedBox(
@@ -123,28 +176,28 @@ class GamePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, lsTitle[1]),
+                  child: buildButton(context, quiz[1].quizAns1),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, lsTitle[2]),
+                  child: buildButton(context, quiz[1].quizAns2),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, lsTitle[3]),
+                  child: buildButton(context, quiz[1].quizAns3),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, lsTitle[4]),
+                  child: buildButton(context, quiz[1].quizAns4),
                 ),
                 const SizedBox(
                   height: 20,
