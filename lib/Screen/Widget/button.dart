@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'ShowDialog.dart';
+
 @override
 Widget buildButton(BuildContext context, String title) {
   return Container(
@@ -48,37 +50,12 @@ Widget buildButtonLogin(
               (route) => false,
             );
           } else {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text('Đăng nhập thất bại'),
-                    backgroundColor: Colors.red,
-                    content: Text('Email hoặc mật khẩu không đúng'),
-                    actions: [
-                      TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('OK'))
-                    ],
-                  );
-                });
+            customDialog(context, 'Đăng nhập thất bại',
+                'Email hoặc mật khẩu không đúng', true);
           }
         });
       } catch (e) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Đăng nhập thất bại'),
-                backgroundColor: Colors.red,
-                content: Text('Lỗi kết nối!'),
-                actions: [
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text('OK'))
-                ],
-              );
-            });
+        customDialog(context, 'Đăng nhập thất bại', 'Lỗi kết nối!', true);
       }
     },
     child: Container(

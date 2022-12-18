@@ -3,8 +3,11 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+import '../Screen/Widget/ShowDialog.dart';
 
 class FirebaseAuthService {
   final userStream = FirebaseAuth.instance.authStateChanges();
@@ -24,13 +27,14 @@ class FirebaseAuthService {
       await FirebaseAuth.instance.signInWithCredential(authCredential);
     } on FirebaseAuthException catch (_) {
       // handle error
+
     }
   }
 
   Future<UserCredential> dangNhapApple() async {
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);
-    //đăng nhập thông qua service apple 
+    //đăng nhập thông qua service apple
     final appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,

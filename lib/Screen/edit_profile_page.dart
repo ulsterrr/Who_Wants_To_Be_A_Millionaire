@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'Widget/ShowDialog.dart';
+
 class EditProfirePage extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtOLDPass = TextEditingController();
@@ -12,6 +14,7 @@ class EditProfirePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Cập nhật tài khoản'),
@@ -35,16 +38,12 @@ class EditProfirePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 60,
-              ),
               SizedBox(
-                height: 100,
-                width: 550,
+                height: size.height * 0.2,
               ),
               Container(
-                width: 325,
-                height: 500,
+                width: size.width * 0.8,
+                height: size.height * 0.58,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -134,60 +133,23 @@ class EditProfirePage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         if (txtPass.text != txtCPass.text) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Mật khẩu không trùng khớp!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          customDialog(context, 'Thông báo!',
+                              'Mật khẩu không trùng khớp!', true);
                         } else if (txtName.text.isEmpty &&
                             txtCPass.text.isEmpty &&
                             txtPass.text.isEmpty) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Vui lòng nhập thông tin!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          customDialog(context, 'Thông báo!',
+                              'Vui lòng nhập thông tin!', true);
                         } else {
                           try {
                             _auth.currentUser!.updatePassword(txtPass.text);
                             _auth.currentUser!.updateDisplayName(txtName.text);
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Cập nhật thành công!',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              backgroundColor: Colors.greenAccent,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+
+                            customDialog(context, 'Thông báo!',
+                                'Cập nhật thành công!', false);
                           } catch (e) {
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Có lỗi xảy ra!',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              backgroundColor: Colors.red,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            customDialog(
+                                context, 'Thông báo!', 'Có lỗi xảy ra!', true);
                           }
                         }
                       },

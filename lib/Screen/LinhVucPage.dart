@@ -5,7 +5,7 @@ import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
 import 'Game_page.dart';
-import 'button.dart';
+import 'Widget/button.dart';
 import 'dart:math';
 import 'dart:async';
 

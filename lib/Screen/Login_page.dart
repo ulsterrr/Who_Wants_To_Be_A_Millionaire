@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'Forgot_page.dart';
 import 'Signup_page.dart';
+import 'Widget/ShowDialog.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -39,9 +40,9 @@ class LoginPageState extends State<LoginPage> {
   void click() {}
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -62,16 +63,12 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
               SizedBox(
-                height: 100,
-                width: 400,
+                height: size.height * 0.16,
               ),
               Container(
-                width: 325,
-                height: 550,
+                width: size.width * 0.8,
+                height: size.height * 0.67,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -80,7 +77,7 @@ class LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -210,7 +207,6 @@ class LoginPageState extends State<LoginPage> {
                         IconButton(
                             onPressed: () async {
                               var user = await signInWithGoogle();
-                              print('\n\n$user\n\n');
                               if (user != null) {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
@@ -218,18 +214,8 @@ class LoginPageState extends State<LoginPage> {
                                   (route) => false,
                                 );
                               } else {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    'Lỗi đăng nhập!',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
+                                customDialog(context, 'Đăng nhập thất bại',
+                                    'Lỗi đăng nhập!', true);
                               }
                             },
                             icon: const Icon(
@@ -246,9 +232,6 @@ class LoginPageState extends State<LoginPage> {
                     )
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 35,
               ),
             ],
           ),

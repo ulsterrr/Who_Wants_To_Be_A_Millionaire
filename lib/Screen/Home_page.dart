@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/profile_page.dart';
 
 import 'Credit_page.dart';
@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -51,19 +52,12 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
               SizedBox(
-                height: 100,
-                width: 400,
-              ),
-              const SizedBox(
-                height: 10,
+                height: size.height * 0.2,
               ),
               Container(
-                width: 325,
-                height: 530,
+                width: size.width * 0.8,
+                height: size.height * 0.64,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
