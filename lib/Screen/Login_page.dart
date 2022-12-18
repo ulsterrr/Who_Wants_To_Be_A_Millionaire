@@ -62,9 +62,9 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
+              // const SizedBox(
+              //   height: 50,
+              // ),
               SizedBox(
                 height: 100,
                 width: 400,
