@@ -5,6 +5,7 @@ class UserObject {
   final String passWord;
   final String email;
   final int? totalPoint;
+  final int? totalCredit;
 
   UserObject(
       {required this.id,
@@ -12,7 +13,7 @@ class UserObject {
       required this.fullName,
       required this.passWord,
       required this.email,
-      this.totalPoint});
+      this.totalPoint, this.totalCredit});
 
   UserObject.fromJson(Map<String, dynamic> r)
       : id = r['id'],
@@ -20,7 +21,8 @@ class UserObject {
         fullName = r['fullName'],
         passWord = r['passWord'],
         email = r['email'],
-        totalPoint = r['totalPoint'];
+        totalPoint = r['totalPoint'],
+        totalCredit = r['totalCredit'];
   Map<String, Object?> toJson() {
     return {
       'id': id,
@@ -28,7 +30,8 @@ class UserObject {
       'fullName': fullName,
       'passWord': passWord,
       'email': email,
-      'totalPoint': totalPoint
+      'totalPoint': totalPoint,
+      'totalCredit': totalCredit
     };
   }
 }

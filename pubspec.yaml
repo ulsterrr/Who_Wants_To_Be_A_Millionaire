@@ -47,6 +47,9 @@ dependencies:
   permission_handler: ^10.2.0
   file_picker: ^5.2.3
   firebase_storage: ^11.0.6
+  sign_in_with_apple: ^4.0.0
+  rxdart: ^0.27.4
+  flutter_riverpod: ^2.1.1
 
 dev_dependencies:
   flutter_test:
