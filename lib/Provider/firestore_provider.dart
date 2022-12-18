@@ -45,10 +45,16 @@ class FireStoreProvider {
   }
 
   // Lấy 1 câu hỏi
-  Future<QuizObject> get1CauHoi(String quizId) async {
-    var ref = _db.collection('Quiz').doc(quizId);
+  static Future<QuizObject> get1CauHoi(int quizId) async {
+    FirebaseFirestore _db = FirebaseFirestore.instance;
+    QuizObject quiz;
+    
+    var ref = _db.collection('Quiz').where('quizId', isEqualTo: quizId);
     var snapshot = await ref.get();
-    return QuizObject.fromJson(snapshot.data() ?? {});
+    var data = snapshot.docs.map((s) => s.data());
+
+    quiz = data.map((d) => QuizObject.fromJson(d)).first;
+    return quiz;
   }
 
   // Lấy thông tin trả lời của người chơi

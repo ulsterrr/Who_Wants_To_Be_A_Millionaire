@@ -14,14 +14,14 @@ class QuizObject {
   final int manyTime;
 
   QuizObject(
-      {required this.id,
-      required this.catetoryId,
-      required this.question,
-      required this.quizAns1,
-      required this.quizAns2,
-      required this.quizAns3,
-      required this.quizAns4,
-      required this.answer,
+      { this.id = 0,
+      this.catetoryId = 0,
+      this.question = '',
+      this.quizAns1 = '',
+      this.quizAns2 = '',
+      this.quizAns3 = '',
+      this.quizAns4 = '',
+      this.answer = '',
       this.level,
       this.manyTime = 0,
       this.point});
