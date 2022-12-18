@@ -58,9 +58,11 @@ class ForgotPageState extends State<ForgotPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Quên mật khẩu'),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -81,19 +83,12 @@ class ForgotPageState extends State<ForgotPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
               SizedBox(
-                height: 100,
-                width: 400,
-              ),
-              const SizedBox(
-                height: 10,
+                height: size.height * 0.2,
               ),
               Container(
-                width: 325,
-                height: 380,
+                width: size.width * 0.8,
+                height: size.height * 0.4,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -102,7 +97,7 @@ class ForgotPageState extends State<ForgotPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -146,17 +141,34 @@ class ForgotPageState extends State<ForgotPage> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else if (!_emailController.text.contains('@')) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Định dạng Email không hợp lệ!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  'Thông báo',
+                                  style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                content: Text(
+                                  'Định dạng Email không hợp lệ!',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
                           );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                         resetPassword();
                       },
