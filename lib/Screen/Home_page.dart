@@ -19,19 +19,7 @@ class HomePage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  GoogleSignIn().signOut();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, 'login', (route) => false);
-                },
-                icon: Icon(Icons.exit_to_app_outlined)),
-          ],
-        ),
+        title: Text(''),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -57,7 +45,7 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.64,
+                height: size.height * 0.695,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -175,8 +163,9 @@ class HomePage extends StatelessWidget {
                       child: buildButton(context, 'Mua Credit'),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
+                    buttonLogout(context),
                   ],
                 ),
               )
