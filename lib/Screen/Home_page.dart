@@ -119,39 +119,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => ProfilePage()),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     alignment: Alignment.center,
-                    //     width: 250,
-                    //     decoration: const BoxDecoration(
-                    //         borderRadius: BorderRadius.all(Radius.circular(50)),
-                    //         gradient: LinearGradient(
-                    //             begin: Alignment.centerLeft,
-                    //             end: Alignment.centerRight,
-                    //             colors: [
-                    //               Color.fromARGB(255, 3, 56, 1),
-                    //               Color.fromARGB(255, 2, 243, 82),
-                    //               Color.fromARGB(255, 18, 87, 41),
-                    //             ])),
-                    //     child: const Padding(
-                    //       padding: EdgeInsets.all(12.0),
-                    //       child: Text(
-                    //         'Quản lý tài khoản',
-                    //         style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -175,11 +142,9 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Trò chơi mới'),
                     ),
-
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -193,7 +158,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -207,7 +171,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(

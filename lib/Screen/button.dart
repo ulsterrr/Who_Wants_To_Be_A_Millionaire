@@ -40,45 +40,45 @@ Widget buildButtonLogin(
       try {
         final newUser = FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: pass);
-        FirebaseAuth.instance
-          ..authStateChanges().listen((event) {
-            if (event != null) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                'home',
-                (route) => false,
-              );
-            } else {
-              final snackBar = SnackBar(
-                content: Text(
-                  'Email hoặc mật khẩu không đúng',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                ),
-                action: SnackBarAction(
-                  label: 'X',
-                  textColor: Colors.white,
-                  onPressed: () {},
-                ),
-                backgroundColor: Colors.red,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
-          });
+        FirebaseAuth.instance.authStateChanges().listen((event) {
+          if (event != null) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              'home',
+              (route) => false,
+            );
+          } else {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Đăng nhập thất bại'),
+                    backgroundColor: Colors.red,
+                    content: Text('Email hoặc mật khẩu không đúng'),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OK'))
+                    ],
+                  );
+                });
+          }
+        });
       } catch (e) {
-        final snackBar = SnackBar(
-          content: Text(
-            'Lỗi kết nối!',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-            ),
-          ),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Đăng nhập thất bại'),
+                backgroundColor: Colors.red,
+                content: Text('Lỗi kết nối!'),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'))
+                ],
+              );
+            });
       }
     },
     child: Container(
