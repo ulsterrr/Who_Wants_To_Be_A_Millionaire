@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LinhVucPage()),
+                              builder: (context) => LinhVuc()),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),

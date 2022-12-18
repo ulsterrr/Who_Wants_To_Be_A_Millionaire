@@ -4,14 +4,35 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'Game_page.dart';
 import 'Widget/button.dart';
 import 'dart:math';
 import 'dart:async';
 
-class LinhVucPage extends StatelessWidget {
+class LinhVuc extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() { return LinhVucPage(); }
+}
+
+class LinhVucPage extends State<LinhVuc> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<CategoryObject> lstCategory = [];
+
+  void getLV() async {
+    final data = await FireStoreProvider.getLinhVuc();
+    setState(() {});
+    lstCategory = data;
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+    getLV();
+  }
+
+  //khai báo list test data cho button
   List<String> lsTitle = [
     'Khoa học - kỹ thuật',
     'Phim ảnh',
@@ -101,7 +122,7 @@ class LinhVucPage extends StatelessWidget {
                   ),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: lsTitle.length,
+                      itemCount: lstCategory.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.fromLTRB(35, 5, 35, 5),
@@ -115,7 +136,7 @@ class LinhVucPage extends StatelessWidget {
                             },
                             child: buildButton(
                               context,
-                              lsTitle[index],
+                              lstCategory[index].categoryName,
                             ),
                           ),
                         );

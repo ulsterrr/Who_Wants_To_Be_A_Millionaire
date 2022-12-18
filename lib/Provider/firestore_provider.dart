@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/catebyuser_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
@@ -11,12 +12,16 @@ class FireStoreProvider {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Lấy danh sách lĩnh vực (thể loại)
-  Future<List<CategoryObject>> getLinhVuc() async {
+  static Future<List<CategoryObject>> getLinhVuc() async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<CategoryObject> cate = [];
+
     var ref = _db.collection('Category');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
-    var category = data.map((d) => CategoryObject.fromJson(d));
-    return category.toList();
+    
+    cate = data.map((d) => CategoryObject.fromJson(d)).toList();
+    return cate;
   }
 
   // Lấy danh câu hỏi
@@ -35,12 +40,13 @@ class FireStoreProvider {
   static Future<List<QuizObject>> getCauHoiLV(int categoryId) async {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     List<QuizObject> quiz = [];
-    var ref = _db.collection('Quiz').where('categoryId', isEqualTo: categoryId)
-                                    .orderBy('level', descending: false);
+    var ref = _db.collection('Quiz');
+    //var ref = _db.collection('Quiz').where('categoryId', isEqualTo: categoryId.toString()).orderBy('level', descending: false);
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
 
     quiz = data.map((d) => QuizObject.fromJson(d)).toList();
+    quiz = quiz.where((element) => element.catetoryId == categoryId).toList();
     return quiz;
   }
 

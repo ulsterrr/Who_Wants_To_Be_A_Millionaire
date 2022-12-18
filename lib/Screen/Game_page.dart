@@ -67,8 +67,8 @@ class GamePageState extends State<GamePage> {
 
   @override
   void initState() {
-    super.initState();
     getLstQuiz();
+    super.initState();
   }
 
   int count = 0;
@@ -435,7 +435,7 @@ class GamePageState extends State<GamePage> {
                 Container(
                   width: 275,
                   alignment: Alignment.center,
-                  child: Text(quiz[1].question,
+                  child: Text(quiz[0].question,
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                 ),
                 const SizedBox(
@@ -443,28 +443,28 @@ class GamePageState extends State<GamePage> {
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, quiz[1].quizAns1),
+                  child: buildButton(context, quiz[0].quizAns1),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, quiz[1].quizAns2),
+                  child: buildButton(context, quiz[0].quizAns2),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, quiz[1].quizAns3),
+                  child: buildButton(context, quiz[0].quizAns3),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: buildButton(context, quiz[1].quizAns4),
+                  child: buildButton(context, quiz[0].quizAns4),
                 ),
                 const SizedBox(
                   height: 20,
