@@ -19,13 +19,13 @@ class FireStoreProvider {
     var ref = _db.collection('Category');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
-    
+
     cate = data.map((d) => CategoryObject.fromJson(d)).toList();
     cate.shuffle();
 
     List<CategoryObject> subList = [];
     int startIndex = 0;
-    int endIndex = 4;
+    int endIndex = 6;
     subList = cate.sublist(startIndex, endIndex);
 
     return subList;
@@ -61,7 +61,7 @@ class FireStoreProvider {
   static Future<QuizObject> get1CauHoi(int quizId) async {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     QuizObject quiz;
-    
+
     var ref = _db.collection('Quiz').where('quizId', isEqualTo: quizId);
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
@@ -75,7 +75,9 @@ class FireStoreProvider {
     return FirebaseAuthService().userStream.switchMap((user) {
       if (user != null) {
         var ref = _db.collection('QuizbyUser').doc(user.uid);
-        return ref.snapshots().map((doc) => QuizbyUserObject.fromJson(doc.data()!));
+        return ref
+            .snapshots()
+            .map((doc) => QuizbyUserObject.fromJson(doc.data()!));
       } else {
         return Stream.fromIterable([QuizbyUserObject()]);
       }
@@ -92,8 +94,10 @@ class FireStoreProvider {
       'userId': user.uid,
       'quizId': FieldValue.arrayUnion([quiz.id]),
       'quizChoice': FieldValue.arrayUnion([quiz.answer]),
-      'countFailed': isPass == false ? FieldValue.increment(1) :  FieldValue.increment(0),
-      'countSuccess': isPass == true ? FieldValue.increment(1) :  FieldValue.increment(0),
+      'countFailed':
+          isPass == false ? FieldValue.increment(1) : FieldValue.increment(0),
+      'countSuccess':
+          isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
       'atTime': '60',
     };
 
@@ -105,12 +109,15 @@ class FireStoreProvider {
     return FirebaseAuthService().userStream.switchMap((user) {
       if (user != null) {
         var ref = _db.collection('CatebyUser').doc(user.uid);
-        return ref.snapshots().map((doc) => CatebyUserObject.fromJson(doc.data()!));
+        return ref
+            .snapshots()
+            .map((doc) => CatebyUserObject.fromJson(doc.data()!));
       } else {
-        return Stream.fromIterable([CatebyUserObject(0,0,0,false,0)]);
+        return Stream.fromIterable([CatebyUserObject(0, 0, 0, false, 0)]);
       }
     });
   }
+
   // Cập nhật thông tin lĩnh vực đã hoàn thành của người chơi
   Future<void> updateUserCategory(CatebyUserObject cate, bool? isPass) {
     var user = FirebaseAuthService().user!;
@@ -121,7 +128,8 @@ class FireStoreProvider {
       'userId': user.uid,
       'catetoryId': FieldValue.arrayUnion([cate.catetoryId]),
       'isPass': isPass ?? false,
-      'passCount': isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
+      'passCount':
+          isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
     };
 
     return ref.set(data, SetOptions(merge: true));

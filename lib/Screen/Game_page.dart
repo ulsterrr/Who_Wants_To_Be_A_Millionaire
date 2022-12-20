@@ -412,7 +412,7 @@ class GamePageState extends State<GamePage> {
                     child: Text(onequiz.question,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -432,7 +432,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(0);
                   },
-                  child: buildButton(context, 'A. ${onequiz.quizAns1}'),
+                  child: buttonQuiz(context, 'A. ${onequiz.quizAns1}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -441,7 +441,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(1);
                   },
-                  child: buildButton(context, 'B. ${onequiz.quizAns2}'),
+                  child: buttonQuiz(context, 'B. ${onequiz.quizAns2}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -450,7 +450,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(2);
                   },
-                  child: buildButton(context, 'C. ${onequiz.quizAns3}'),
+                  child: buttonQuiz(context, 'C. ${onequiz.quizAns3}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -459,7 +459,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(3);
                   },
-                  child: buildButton(context, 'D. ${onequiz.quizAns4}'),
+                  child: buttonQuiz(context, 'D. ${onequiz.quizAns4}'),
                 ),
                 const SizedBox(
                   height: 20,
