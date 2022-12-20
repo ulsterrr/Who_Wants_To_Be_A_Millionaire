@@ -4,27 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'Forgot_page.dart';
 import 'Signup_page.dart';
 import 'Widget/ShowDialog.dart';
+import 'package:who_wants_to_be_a_millionaire/Provider/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return LoginPageState();
   }
-}
-
-Future<UserCredential> signInWithGoogle() async {
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 class LoginPageState extends State<LoginPage> {
@@ -206,17 +197,7 @@ class LoginPageState extends State<LoginPage> {
                                 color: Colors.blue)),
                         IconButton(
                             onPressed: () async {
-                              var user = await signInWithGoogle();
-                              if (user != null) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  'home',
-                                  (route) => false,
-                                );
-                              } else {
-                                customDialog(context, 'Đăng nhập thất bại',
-                                    'Lỗi đăng nhập!', true);
-                              }
+                              _googleSignIn(context);
                             },
                             icon: const Icon(
                               FontAwesomeIcons.google,
@@ -225,7 +206,7 @@ class LoginPageState extends State<LoginPage> {
                         IconButton(
                             onPressed: click,
                             icon: const Icon(
-                              FontAwesomeIcons.twitter,
+                              FontAwesomeIcons.apple,
                               color: Colors.cyan,
                             )),
                       ],
@@ -238,5 +219,18 @@ class LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+}
+
+_googleSignIn(BuildContext context) async {
+  var user = await FirebaseAuthService().signInWithGoogle();
+  if (user != null) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      'home',
+      (route) => false,
+    );
+  } else {
+    customDialog(context, 'Đăng nhập thất bại', 'Lỗi đăng nhập!', true);
   }
 }

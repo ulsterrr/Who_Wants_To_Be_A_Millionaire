@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -118,8 +118,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LinhVuc()),
+                          MaterialPageRoute(builder: (context) => LinhVuc()),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),

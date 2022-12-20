@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -17,7 +18,7 @@ class FirebaseAuthService {
     try {
       final googleUser = await GoogleSignIn().signIn();
 
-      if (googleUser == null) return;
+      if (googleUser == null) return null;
 
       final googleAuth = await googleUser.authentication;
       final authCredential = GoogleAuthProvider.credential(
@@ -27,8 +28,21 @@ class FirebaseAuthService {
       await FirebaseAuth.instance.signInWithCredential(authCredential);
     } on FirebaseAuthException catch (_) {
       // handle error
-
+      return null;
     }
+  }
+
+  
+
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   Future<UserCredential> dangNhapApple() async {
