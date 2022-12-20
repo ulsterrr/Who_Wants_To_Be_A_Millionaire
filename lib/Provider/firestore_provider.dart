@@ -54,6 +54,9 @@ class FireStoreProvider {
 
     quiz = data.map((d) => QuizObject.fromJson(d)).toList();
     quiz = quiz.where((element) => element.catetoryId == categoryId).toList();
+    //sắp ngẫu nhiên câu hỏi
+    quiz.shuffle();
+
     return quiz;
   }
 

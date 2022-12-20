@@ -39,6 +39,10 @@ class GamePageState extends State<GamePage> {
   //declare data
   final FirebaseAuth _auth = FirebaseAuth.instance;
   QuizObject onequiz = new QuizObject();
+
+  //giới hạn 10 câu hỏi
+  List<QuizObject> subList = [];
+
   //thang điểm
   int score = 0;
   var scores = [
@@ -63,8 +67,36 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
+    int startIndex = 0;
+    int endIndex = 10;
+    subList = this.widget.quiz.sublist(startIndex, endIndex);
     Next();
   }
+
+  //ghi đè phương thức back handler của button back điện thoại
+  Future<bool> _onWillPop() async {
+  return (await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: new Text('Bạn có chắc chắn?'),
+          content: new Text('Thoát game hiện tại và quay về màn hình chọn Lĩnh Vực'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), //<-- SEE HERE
+              child: new Text('Tiếp tục', style: TextStyle(color: Colors.green.shade400)),
+            ),
+            TextButton(
+              onPressed: () {
+                count = 0;
+                Navigator.of(context).pop(true);
+              }, // <-- SEE HERE
+              child: new Text('Chấp nhận', style: TextStyle(color: Colors.red.shade400)),
+            ),
+          ],
+        ),
+      )) ??
+      false;
+}
 
   int count = 0;
   void Gogame() {
@@ -86,18 +118,22 @@ class GamePageState extends State<GamePage> {
     used = false;
     timer?.cancel();
     height = List.filled(4, 0.0);
-    //answer = List.filled(4, "");
+    answer = List.filled(4, "");
     Random rdonequiz = new Random();
     int location = 0;
-    if (this.widget.quiz.length > 0) {
-      int location = rdonequiz.nextInt(this.widget.quiz.length);
-      onequiz = this.widget.quiz[location];
+    if (subList.length > 0) {
+      int location = rdonequiz.nextInt(subList.length);
+      onequiz = subList[location];
       var temp = [
         onequiz.quizAns1,
         onequiz.quizAns2,
         onequiz.quizAns3,
         onequiz.quizAns4
       ];
+      answer[0] = "A: ";
+      answer[1] = "B: ";
+      answer[2] = "C: ";
+      answer[3] = "D: ";
       for (int i = 0; i < 4; i++) {
         int random = rd.nextInt(temp.length);
         answer[i] += temp[random];
@@ -108,7 +144,7 @@ class GamePageState extends State<GamePage> {
         colors = List.filled(4, Colors.black);
         onequiz;
       });
-      this.widget.quiz.removeAt(location);
+      subList.removeAt(location);
     }
     Gogame();
   }
@@ -123,7 +159,7 @@ class GamePageState extends State<GamePage> {
 
   // ignore: non_constant_identifier_names
   void ChooseAns(int index) {
-    if (answer[index] != "") {
+    if (answer[index] != "" && checkChose == false) {
       checkChose = true;
       setState(() {
         colors[index] = Colors.yellow.shade800;
@@ -146,6 +182,7 @@ class GamePageState extends State<GamePage> {
                 time2--;
               } else {
                 timer2!.cancel();
+                Next();
               }
             });
           } else {
@@ -178,7 +215,7 @@ class GamePageState extends State<GamePage> {
       for (int i = 0;; i++) {
         if (count < 2) {
           Random rd = new Random();
-          int a = rd.nextInt(answer.length);
+          int a = rd.nextInt(4);
           if (!answer[a].contains(onequiz.answer) && answer[a] != "") {
             answer[a] = "";
             count++;
@@ -277,7 +314,10 @@ class GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    //đặt Scaffold trong WillPopScope để handle button back điện thoại
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
       appBar: AppBar(
         leadingWidth: 0,
         automaticallyImplyLeading: false,
@@ -432,7 +472,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(0);
                   },
-                  child: buildButton(context, 'A. ${onequiz.quizAns1}'),
+                  child: buildButton(context, '${answer[0]}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -441,7 +481,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(1);
                   },
-                  child: buildButton(context, 'B. ${onequiz.quizAns2}'),
+                  child: buildButton(context, '${answer[1]}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -450,7 +490,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(2);
                   },
-                  child: buildButton(context, 'C. ${onequiz.quizAns3}'),
+                  child: buildButton(context, '${answer[2]}'),
                 ),
                 const SizedBox(
                   height: 10,
@@ -459,7 +499,7 @@ class GamePageState extends State<GamePage> {
                   onTap: () {
                     ChooseAns(3);
                   },
-                  child: buildButton(context, 'D. ${onequiz.quizAns4}'),
+                  child: buildButton(context, '${answer[3]}'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -554,6 +594,7 @@ class GamePageState extends State<GamePage> {
               ],
             )),
       ),
+    ),
     );
   }
 }
