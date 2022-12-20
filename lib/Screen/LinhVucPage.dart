@@ -12,6 +12,8 @@ import 'dart:math';
 import 'dart:async';
 
 class LinhVuc extends StatefulWidget {
+  List<CategoryObject> Category;
+  LinhVuc({required this.Category});
 
   @override
   State<StatefulWidget> createState() { return LinhVucPage(); }
@@ -19,14 +21,8 @@ class LinhVuc extends StatefulWidget {
 
 class LinhVucPage extends State<LinhVuc> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  List<CategoryObject> lstCategory = [];
   List<QuizObject> lstQuiz = [];
 
-  Future<void> getLV() async {
-    final data = await FireStoreProvider.getLinhVuc();
-    lstCategory = data;
-    setState(() {});
-  }
   Future<void> getLstQuiz(int id) async {
     final data = await FireStoreProvider.getCauHoiLV(id);
     lstQuiz = data;
@@ -36,18 +32,7 @@ class LinhVucPage extends State<LinhVuc> {
   @override
   void initState() {
     super.initState();
-    getLV();
   }
-
-  //khai báo list test data cho button
-  List<String> lsTitle = [
-    'Khoa học - kỹ thuật',
-    'Phim ảnh',
-    'Văn hóa - xã hội',
-    'Văn hóa - xã hội',
-    'Văn hóa - xã hội',
-    'Lịch sử - địa lí'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +40,7 @@ class LinhVucPage extends State<LinhVuc> {
         appBar: AppBar(
           automaticallyImplyLeading: true,
           centerTitle: true,
-          title: Row(
+          title: Row( 
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
@@ -129,22 +114,25 @@ class LinhVucPage extends State<LinhVuc> {
                   ),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: lstCategory.length,
+                      itemCount: this.widget.Category.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.fromLTRB(35, 5, 35, 5),
                           child: GestureDetector(
-                            onTap: () {
-                              getLstQuiz(lstCategory[index].id);
-                              Navigator.push(
+                            onTap: () async{
+                              // gán rỗng cho mảng câu hỏi để load page ko bị trùng data khi chưa get kịp
+                              lstQuiz = [];
+                              // dùng then để nhận biết load xong data thì chuyển sang màn hình khác
+                              getLstQuiz(this.widget.Category[index].id).then((value) => Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => GamePage(quiz: lstQuiz,)),
-                              );
+                              ));
+                              
                             },
                             child: buildButton(
                               context,
-                              lstCategory[index].categoryName,
+                              this.widget.Category[index].categoryName,
                             ),
                           ),
                         );
