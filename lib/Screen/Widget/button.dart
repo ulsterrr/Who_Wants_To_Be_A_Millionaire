@@ -32,30 +32,107 @@ Widget buildButton(BuildContext context, String title) {
   );
 }
 
-Widget buttonQuiz(BuildContext context, String title) {
-  return Container(
-    alignment: Alignment.center,
-    height: 65,
-    width: 320,
-    decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(50)),
-        gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color.fromARGB(255, 32, 31, 128),
-              Color.fromARGB(255, 20, 133, 148),
-              Color.fromARGB(255, 2, 55, 99),
-            ])),
-    child: Padding(
-      padding: EdgeInsets.all(9.0),
-      child: Text(
-        title,
-        style: TextStyle(
-            color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+Widget buttonQuiz(BuildContext context, String title, String ans) {
+  const List<Color> orginal = [
+    Color.fromARGB(255, 32, 31, 128),
+    Color.fromARGB(255, 20, 133, 148),
+    Color.fromARGB(255, 2, 55, 99),
+  ];
+  if(ans == 'df') {
+    return Container(
+      alignment: Alignment.center,
+      height: 55,
+      width: 300,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: orginal)),
+      child: Padding(
+        padding: EdgeInsets.all(9.0),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+        ),
       ),
-    ),
-  );
+    );
+  } else if(ans == 'true'){
+    return Container(
+      alignment: Alignment.center,
+      height: 55,
+      width: 300,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Colors.green,
+                Colors.green,
+                Colors.green,
+              ])),
+      child: Padding(
+        padding: EdgeInsets.all(9.0),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+  else if(ans == 'choose') {
+    return Container(
+      alignment: Alignment.center,
+      height: 55,
+      width: 300,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Colors.yellow,
+                Color.fromARGB(255, 20, 133, 148),
+                Colors.yellow,
+              ])),
+      child: Padding(
+        padding: EdgeInsets.all(9.0),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+  else {
+    return Container(
+      alignment: Alignment.center,
+      height: 55,
+      width: 300,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Colors.redAccent,
+                Colors.red,
+                Colors.redAccent,
+              ])),
+      child: Padding(
+        padding: EdgeInsets.all(9.0),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
 }
 
 Widget buttonLogout(BuildContext context) {

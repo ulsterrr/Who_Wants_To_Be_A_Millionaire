@@ -2,18 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 
-class CustomTimer extends StatefulWidget {
-  int countdown;
-  CustomTimer({Key? key, required this.countdown}) : super(key: key);
-
   @override
-  State<CustomTimer> createState() => _CustomTimerState();
-}
-
-class _CustomTimerState extends State<CustomTimer> {
-
-  @override
-  Widget build(BuildContext context) {
+  Widget TimerLoading(BuildContext context, int countdown) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       height: 35,
@@ -29,7 +19,7 @@ class _CustomTimerState extends State<CustomTimer> {
             builder: (context, ref, child) {
               return FractionallySizedBox(
                 alignment: Alignment.centerLeft,
-                widthFactor: this.widget.countdown / 60,
+                widthFactor: countdown / 60,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -43,7 +33,7 @@ class _CustomTimerState extends State<CustomTimer> {
             left: 10,
             child: Consumer(
               builder: (context, ref, child) {
-                return Text('${this.widget.countdown} seconds');
+                return Text('${countdown} seconds');
               },
             ),
           ),
@@ -58,4 +48,3 @@ class _CustomTimerState extends State<CustomTimer> {
       ),
     );
   }
-}
