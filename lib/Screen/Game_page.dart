@@ -8,7 +8,7 @@ import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/timebar_for_question.dart';
 
-import 'button.dart';
+import 'Widget/button.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -452,7 +452,7 @@ class GamePageState extends State<GamePage> {
                     child: Text(onequiz.question,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold)),
                   ),
                 ),

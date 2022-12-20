@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/profile_page.dart';
 
 import '../Object/category_obj.dart';
@@ -27,21 +27,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getLV();
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  GoogleSignIn().signOut();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, 'login', (route) => false);
-                },
-                icon: Icon(Icons.exit_to_app_outlined)),
-          ],
-        ),
+        title: Text(''),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -62,19 +51,12 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
               SizedBox(
-                height: 100,
-                width: 400,
-              ),
-              const SizedBox(
-                height: 10,
+                height: size.height * 0.2,
               ),
               Container(
-                width: 325,
-                height: 530,
+                width: size.width * 0.8,
+                height: size.height * 0.695,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -83,7 +65,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -130,39 +112,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => ProfilePage()),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     alignment: Alignment.center,
-                    //     width: 250,
-                    //     decoration: const BoxDecoration(
-                    //         borderRadius: BorderRadius.all(Radius.circular(50)),
-                    //         gradient: LinearGradient(
-                    //             begin: Alignment.centerLeft,
-                    //             end: Alignment.centerRight,
-                    //             colors: [
-                    //               Color.fromARGB(255, 3, 56, 1),
-                    //               Color.fromARGB(255, 2, 243, 82),
-                    //               Color.fromARGB(255, 18, 87, 41),
-                    //             ])),
-                    //     child: const Padding(
-                    //       padding: EdgeInsets.all(12.0),
-                    //       child: Text(
-                    //         'Quản lý tài khoản',
-                    //         style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -186,11 +135,9 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Trò chơi mới'),
                     ),
-
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -204,7 +151,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -218,7 +164,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -229,8 +174,9 @@ class HomePage extends StatelessWidget {
                       child: buildButton(context, 'Mua Credit'),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
+                    buttonLogout(context),
                   ],
                 ),
               )

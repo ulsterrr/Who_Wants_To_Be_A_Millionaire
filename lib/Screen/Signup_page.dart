@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'Widget/ShowDialog.dart';
+
 class SignupPage extends StatelessWidget {
   Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -24,6 +26,7 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Tạo tài khoản'),
@@ -47,19 +50,12 @@ class SignupPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
               SizedBox(
-                height: 100,
-                width: 550,
-              ),
-              const SizedBox(
-                height: 10,
+                height: size.height * 0.16,
               ),
               Container(
-                width: 325,
-                height: 550,
+                width: size.width * 0.8,
+                height: size.height * 0.67,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -163,31 +159,20 @@ class SignupPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
+                        if (txtCPass.text.isEmpty ||
+                            txtEmail.text.isEmpty ||
+                            txtName.text.isEmpty ||
+                            txtPass.text.isEmpty) {
+                          customDialog(context, 'Thông báo!',
+                              'Vui lòng nhập đủ thông tin!', true);
+                        }
                         if (txtPass.text != txtCPass.text) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Mật khẩu không trùng khớp!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          customDialog(context, 'Thông báo!',
+                              'Mật khẩu không trùng khớp!', true);
                         } else if (txtPass.text.length < 6 &&
                             txtCPass.text.length < 6) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Mật khẩu ít nhất 6 ký tự!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          customDialog(context, 'Thông báo!',
+                              'Mật khẩu ít nhất 6 ký tự!', true);
                         } else {
                           try {
                             final newUser =
@@ -201,32 +186,12 @@ class SignupPage extends StatelessWidget {
                             if (newUser != null) {
                               Navigator.pop(context, 'Đăng ký thành công!');
                             } else {
-                              final snackBar = SnackBar(
-                                content: Text(
-                                  'Tài khoản không hợp lệ!',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                backgroundColor: Colors.red,
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                              customDialog(context, 'Thông báo!',
+                                  'Tài khoản không hợp lệ!', true);
                             }
                           } catch (e) {
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Có lỗi xảy ra!',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              backgroundColor: Colors.red,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            customDialog(
+                                context, 'Thông báo!', 'Có lỗi xảy ra!', true);
                           }
                         }
                       },

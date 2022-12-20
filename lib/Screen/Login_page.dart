@@ -4,26 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:who_wants_to_be_a_millionaire/Screen/button.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'Forgot_page.dart';
 import 'Signup_page.dart';
+import 'Widget/ShowDialog.dart';
+import 'package:who_wants_to_be_a_millionaire/Provider/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return LoginPageState();
   }
-}
-
-Future<UserCredential> signInWithGoogle() async {
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 class LoginPageState extends State<LoginPage> {
@@ -39,9 +31,9 @@ class LoginPageState extends State<LoginPage> {
   void click() {}
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -62,16 +54,12 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // const SizedBox(
-              //   height: 50,
-              // ),
               SizedBox(
-                height: 100,
-                width: 400,
+                height: size.height * 0.16,
               ),
               Container(
-                width: 325,
-                height: 550,
+                width: size.width * 0.8,
+                height: size.height * 0.67,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -80,7 +68,7 @@ class LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -170,79 +158,6 @@ class LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    // GestureDetector(
-                    //   onTap: () async {
-                    //     try {
-                    //       final newUser = _auth.signInWithEmailAndPassword(
-                    //           email: txtEmail.text, password: txtPass.text);
-                    //       _auth.authStateChanges().listen((event) {
-                    //         if (event != null) {
-                    //           txtEmail.clear();
-                    //           txtPass.clear();
-                    //           Navigator.pushNamedAndRemoveUntil(
-                    //             context,
-                    //             'home',
-                    //             (route) => false,
-                    //           );
-                    //         } else {
-                    //           final snackBar = SnackBar(
-                    //             content: Text(
-                    //               'Email hoặc mật khẩu không đúng',
-                    //               style: const TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: 18.0,
-                    //               ),
-                    //             ),
-                    //             action: SnackBarAction(
-                    //               label: 'X',
-                    //               textColor: Colors.white,
-                    //               onPressed: () {},
-                    //             ),
-                    //             backgroundColor: Colors.red,
-                    //           );
-                    //           ScaffoldMessenger.of(context)
-                    //               .showSnackBar(snackBar);
-                    //         }
-                    //       });
-                    //     } catch (e) {
-                    //       final snackBar = SnackBar(
-                    //         content: Text(
-                    //           'Lỗi kết nối!',
-                    //           style: const TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 18.0,
-                    //           ),
-                    //         ),
-                    //         backgroundColor: Colors.red,
-                    //       );
-                    //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //     }
-                    //   },
-                    //   child: Container(
-                    //     alignment: Alignment.center,
-                    //     width: 250,
-                    //     decoration: const BoxDecoration(
-                    //         borderRadius: BorderRadius.all(Radius.circular(50)),
-                    //         gradient: LinearGradient(
-                    //             begin: Alignment.centerLeft,
-                    //             end: Alignment.centerRight,
-                    //             colors: [
-                    //               Color.fromARGB(255, 2, 1, 71),
-                    //               Colors.cyan,
-                    //               Color.fromARGB(255, 1, 25, 44),
-                    //             ])),
-                    //     child: const Padding(
-                    //       padding: EdgeInsets.all(12.0),
-                    //       child: Text(
-                    //         'Đăng nhập',
-                    //         style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     buildButtonLogin(
                         context, 'Đăng nhập', txtPass.text, txtEmail.text),
                     const SizedBox(
@@ -282,28 +197,7 @@ class LoginPageState extends State<LoginPage> {
                                 color: Colors.blue)),
                         IconButton(
                             onPressed: () async {
-                              var user = await signInWithGoogle();
-                              print('\n\n$user\n\n');
-                              if (user != null) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  'home',
-                                  (route) => false,
-                                );
-                              } else {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    'Lỗi đăng nhập!',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              }
+                              _googleSignIn(context);
                             },
                             icon: const Icon(
                               FontAwesomeIcons.google,
@@ -312,7 +206,7 @@ class LoginPageState extends State<LoginPage> {
                         IconButton(
                             onPressed: click,
                             icon: const Icon(
-                              FontAwesomeIcons.twitter,
+                              FontAwesomeIcons.apple,
                               color: Colors.cyan,
                             )),
                       ],
@@ -320,13 +214,23 @@ class LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 35,
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+_googleSignIn(BuildContext context) async {
+  var user = await FirebaseAuthService().signInWithGoogle();
+  if (user != null) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      'home',
+      (route) => false,
+    );
+  } else {
+    customDialog(context, 'Đăng nhập thất bại', 'Lỗi đăng nhập!', true);
   }
 }

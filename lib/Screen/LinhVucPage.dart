@@ -7,7 +7,7 @@ import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'Game_page.dart';
-import 'button.dart';
+import 'Widget/button.dart';
 import 'dart:math';
 import 'dart:async';
 

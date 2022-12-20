@@ -13,6 +13,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Thông tin tài khoản'),
@@ -36,16 +37,12 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 100,
-              ),
               SizedBox(
-                height: 100,
-                width: 550,
+                height: size.height * 0.2,
               ),
               Container(
-                width: 325,
-                height: 380,
+                width: size.width * 0.8,
+                height: size.height * 0.6,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),

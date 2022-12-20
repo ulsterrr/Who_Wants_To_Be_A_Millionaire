@@ -1,0 +1,6 @@
+{
+    "cmake.sourceDirectory": "${workspaceFolder}/linux",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
+}
