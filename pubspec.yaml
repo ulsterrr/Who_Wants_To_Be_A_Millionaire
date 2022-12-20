@@ -78,6 +78,7 @@ flutter:
     - images/ailatrieuphu.png
     - images/mewmew.jpg
     - images/avt1.jpg
+    - images/helper/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

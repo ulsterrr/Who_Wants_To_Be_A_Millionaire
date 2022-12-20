@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'Game_page.dart';
 import 'button.dart';
@@ -19,13 +20,19 @@ class LinhVuc extends StatefulWidget {
 class LinhVucPage extends State<LinhVuc> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<CategoryObject> lstCategory = [];
+  List<QuizObject> lstQuiz = [];
 
-  void getLV() async {
+  Future<void> getLV() async {
     final data = await FireStoreProvider.getLinhVuc();
-    setState(() {});
     lstCategory = data;
+    setState(() {});
   }
-  
+  Future<void> getLstQuiz(int id) async {
+    final data = await FireStoreProvider.getCauHoiLV(id);
+    lstQuiz = data;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -128,10 +135,11 @@ class LinhVucPage extends State<LinhVuc> {
                           padding: const EdgeInsets.fromLTRB(35, 5, 35, 5),
                           child: GestureDetector(
                             onTap: () {
+                              getLstQuiz(lstCategory[index].id);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => GamePage(category: lstCategory[index],)),
+                                    builder: (context) => GamePage(quiz: lstQuiz,)),
                               );
                             },
                             child: buildButton(
