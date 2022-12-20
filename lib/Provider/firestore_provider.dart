@@ -21,7 +21,14 @@ class FireStoreProvider {
     var data = snapshot.docs.map((s) => s.data());
     
     cate = data.map((d) => CategoryObject.fromJson(d)).toList();
-    return cate;
+    cate.shuffle();
+
+    List<CategoryObject> subList = [];
+    int startIndex = 0;
+    int endIndex = 4;
+    subList = cate.sublist(startIndex, endIndex);
+
+    return subList;
   }
 
   // Lấy danh câu hỏi
