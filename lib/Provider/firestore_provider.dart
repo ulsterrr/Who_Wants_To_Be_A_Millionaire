@@ -7,11 +7,10 @@ import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quizbyuser_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/rank_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/usercredit_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/authentication.dart';
 
 class FireStoreProvider {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
   // Lấy danh sách lĩnh vực (thể loại)
   static Future<List<CategoryObject>> getLinhVuc() async {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -74,37 +73,20 @@ class FireStoreProvider {
     return quiz;
   }
 
-  // Lấy thông tin trả lời của người chơi
-  Stream<QuizbyUserObject> getUserQuiz() {
-    return FirebaseAuthService().userStream.switchMap((user) {
-      if (user != null) {
-        var ref = _db.collection('QuizbyUser').doc(user.uid);
-        return ref
-            .snapshots()
-            .map((doc) => QuizbyUserObject.fromJson(doc.data()!));
-      } else {
-        return Stream.fromIterable([QuizbyUserObject()]);
-      }
-    });
-  }
-
   // Cập nhật thông tin trả lời của người chơi
-  static Future<void> updateUserQuiz(QuizObject quiz, bool? isPass, int coutdown) {
+  static Future<void> updateUserQuiz(
+      QuizObject quiz, bool? isPass, int coutdown) {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
     var ref = _db.collection('QuizbyUser');
-
-    var data = _db.collection('QuizbyUser').orderBy('id', descending: true).get();
 
     var temp = {
       'id': FieldValue.increment(1),
       'userId': user.uid,
       'quizId': quiz.id,
       'quizChoice': quiz.answer,
-      'countFailed':
-          isPass == false ? 1 : 0,
-      'countSuccess':
-          isPass == true ? 1 : 0,
+      'countFailed': isPass == false ? 1 : 0,
+      'countSuccess': isPass == true ? 1 : 0,
       'atTime': coutdown.toString(),
     };
 
@@ -116,7 +98,6 @@ class FireStoreProvider {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
     var ref = _db.collection('rank');
-
 
     var temp = {
       'id': FieldValue.increment(1),
@@ -130,71 +111,90 @@ class FireStoreProvider {
   }
 
   // Lấy thông tin trả lời của người chơi
-  Stream<CatebyUserObject> getUserCategory() {
-    return FirebaseAuthService().userStream.switchMap((user) {
-      if (user != null) {
-        var ref = _db.collection('CatebyUser').doc(user.uid);
-        return ref
-            .snapshots()
-            .map((doc) => CatebyUserObject.fromJson(doc.data()!));
-      } else {
-        return Stream.fromIterable([CatebyUserObject(0, 0, 0, false, 0)]);
-      }
-    });
+  static Future<List<CatebyUserObject>> getUserbyQuiz() async {
+    var user = FirebaseAuthService().user!;
+    FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<CatebyUserObject> qbu = [];
+    var ref = _db.collection('QuizbyUser');
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+
+    qbu = data.map((d) => CatebyUserObject.fromJson(d)).toList();
+    qbu = qbu.where((element) => element.catetoryId == user.uid).toList();
+
+    return qbu;
   }
 
   // Cập nhật thông tin lĩnh vực đã hoàn thành của người chơi
-  Future<void> updateUserCategory(CatebyUserObject cate, bool? isPass) {
+  static Future<void> updateUserCategory(CatebyUserObject cate, bool? isPass) {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
-    var ref = _db.collection('CatebyUser').doc(user.uid);
+    var ref = _db.collection('CatebyUser');
 
     var data = {
       'id': FieldValue.increment(1),
       'userId': user.uid,
-      'catetoryId': FieldValue.arrayUnion([cate.catetoryId]),
+      'catetoryId': cate.catetoryId,
       'isPass': isPass ?? false,
       'passCount':
           isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
     };
 
-    return ref.set(data, SetOptions(merge: true));
+    return ref.add(data);
   }
-
+  //lấy 10 rank cao điểm nhất
   static Future<List<UserRankObject>> getUserRank() async {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<UserRankObject> cate = [];
+    List<UserRankObject> rank = [];
 
-    var ref = _db.collection('Rank');
+    var ref = _db.collection('rank').orderBy('score', descending: true);
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
 
-    cate = data.map((d) => UserRankObject.fromJson(d)).toList();
-    cate.shuffle();
+    rank = data.map((d) => UserRankObject.fromJson(d)).toList();
 
     List<UserRankObject> subList = [];
     int startIndex = 0;
     int endIndex = 10;
-    subList = cate.sublist(startIndex, endIndex);
+    subList = rank.sublist(startIndex, endIndex);
 
     return subList;
   }
 
-  static Future<List<UserRankObject>> getHistory() async {
+  //mua credit cho user
+  static Future<void> buyCreditUser(int creditsId, int qty) {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<UserRankObject> cate = [];
+    var user = FirebaseAuthService().user!;
+    var ref = _db.collection('UserCredit');
+    DateTime today = DateTime.now();
 
-    var ref = _db.collection('Rank');
+    var data = {
+      'id': 1,
+      'userId': user.uid,
+      'creditsId': creditsId,
+      'quantity': qty,
+      'buyTime': today.toString().substring(0, 19),
+    };
+
+    return ref.add(data);
+  }
+
+  //lấy số tiền của user đã mua
+  static Future<int> getUserCredit() async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<UserCreditObject> credit = [];
+
+    var ref = _db.collection('UserCredit');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
 
-    cate = data.map((d) => UserRankObject.fromJson(d)).toList();
-    cate.shuffle();
+    credit = data.map((d) => UserCreditObject.fromJson(d)).toList();
 
-    List<UserRankObject> subList = [];
-    int startIndex = 0;
-    int endIndex = 10;
-    subList = cate.sublist(startIndex, endIndex);
+    int total_credit = 0;
+    credit.forEach((element) { 
+      total_credit += element.quantity;
+    });
 
-    return subList;
+    return total_credit;
   }
 }

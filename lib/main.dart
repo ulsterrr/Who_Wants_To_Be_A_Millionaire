@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           FirebaseAuth.instance.currentUser == null ? 'login' : 'home',
       routes: {
         'login': (context) => LoginPage(),
-        'home': (context) => HomePage(),
+        'home': (context) => Home(),
         'end': (context) => EndGame(),
       },
     );

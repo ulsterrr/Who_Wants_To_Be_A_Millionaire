@@ -14,19 +14,45 @@ import 'LinhVucPage.dart';
 import 'Signup_page.dart';
 import 'profile_page.dart';
 
-class HomePage extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() { return HomePage(); }
+}
+
+class HomePage extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<CategoryObject> lstCategory = [];
-  
+  int credit = 0;
   Future<void> getLV() async {
     lstCategory = [];
     final data = await FireStoreProvider.getLinhVuc();
     lstCategory = data;
   }
 
+  Future<void> getCredit() async {
+    credit = 0;
+    final data = await FireStoreProvider.getUserCredit();
+    setState(() {
+      credit = data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLV();
+    getCredit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     getLV();
+    getCredit();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -100,7 +126,7 @@ class HomePage extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              ' 2000',
+                              credit.toString(),
                               style: TextStyle(
                                 color: Colors.orangeAccent,
                               ),
@@ -130,7 +156,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LinhVuc(Category: lstCategory,)),
+                              builder: (context) => LinhVuc(Category: lstCategory, credit: credit,)),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),
@@ -168,7 +194,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CreditPage()),
+                          MaterialPageRoute(builder: (context) => Credit()),
                         );
                       },
                       child: buildButton(context, 'Mua Credit'),

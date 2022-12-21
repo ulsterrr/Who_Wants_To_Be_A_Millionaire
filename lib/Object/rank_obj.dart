@@ -1,6 +1,6 @@
 class UserRankObject {
   final int id;
-  final int userId;
+  final String userId;
   final String fullName;
   final int score;
   final String atTime;
