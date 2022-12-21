@@ -13,7 +13,7 @@ class EndGame extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Bạn được $score VNĐ\nXin chúc mừng",
+              Text("Bạn được ${score} VNĐ\nXin chúc mừng",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 25, color: Colors.white)),
               Image.asset("images/helper/congrats.gif"),

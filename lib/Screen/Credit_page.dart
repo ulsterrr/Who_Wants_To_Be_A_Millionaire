@@ -15,6 +15,22 @@ class Credit extends StatefulWidget {
 
 class CreditPage extends State<Credit> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  int credit = 0;
+  Future<void> getCredit() async {
+    credit = 0;
+    await FireStoreProvider.getUserCredit().then((value) {
+      credit = value;
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCredit();
+  }
+
   void click(int id, int qty) {
     showDialog(
         context: context,
@@ -54,42 +70,52 @@ class CreditPage extends State<Credit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: 170,
-              color: Colors.blueAccent,
-              child: Text(
-                _auth.currentUser!.displayName == null
-                    ? 'Username'
-                    : _auth.currentUser!.displayName!,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 16, 64, 148)),
+          leadingWidth: 25,
+          automaticallyImplyLeading: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 150,
+                //color: Colors.blueAccent,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  _auth.currentUser!.displayName == null
+                      ? 'Người chơi: Username'
+                      : 'Người chơi: ' + _auth.currentUser!.displayName!,
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                ),
               ),
+            ],
+          ),
+          actions: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                    child: Icon(
+                  FontAwesomeIcons.gem,
+                  color: Color.fromARGB(255, 240, 170, 78),
+                )),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '${credit}',
+                  style: TextStyle(color: Colors.yellowAccent, fontSize: 20),
+                ),
+              ],
             ),
             const SizedBox(
-              width: 20,
-            ),
-            Container(
-              child: Text(
-                '2.000',
-                style: TextStyle(color: Colors.yellowAccent),
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                FontAwesomeIcons.gem,
-                color: Colors.yellowAccent,
-              ),
-            ),
+              width: 15,
+            )
           ],
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
@@ -106,14 +132,6 @@ class CreditPage extends State<Credit> {
               ])),
           child: Column(
             children: [
-              IconButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    GoogleSignIn().signOut();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, 'login', (route) => false);
-                  },
-                  icon: Icon(Icons.exit_to_app_outlined)),
               const SizedBox(
                 height: 100,
               ),
@@ -149,6 +167,7 @@ class CreditPage extends State<Credit> {
                           return GestureDetector(
                             onTap: () {
                               click(1, diamond[index]);
+                              setState(() {});
                             },
                             child: Card(
                               color: Colors.orange,

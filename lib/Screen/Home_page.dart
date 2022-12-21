@@ -11,12 +11,15 @@ import '../Provider/firestore_provider.dart';
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
+import 'Rank_page.dart';
 import 'Signup_page.dart';
 import 'profile_page.dart';
 
 class Home extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() { return HomePage(); }
+  State<StatefulWidget> createState() {
+    return HomePage();
+  }
 }
 
 class HomePage extends State<Home> {
@@ -27,26 +30,24 @@ class HomePage extends State<Home> {
     lstCategory = [];
     final data = await FireStoreProvider.getLinhVuc();
     lstCategory = data;
+    setState(() {
+      
+    });
   }
 
   Future<void> getCredit() async {
-    credit = 0;
     final data = await FireStoreProvider.getUserCredit();
+    credit = data;
     setState(() {
-      credit = data;
+      
     });
   }
 
   @override
   void initState() {
-    super.initState();
     getLV();
     getCredit();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    super.initState();
   }
 
   @override
@@ -82,7 +83,7 @@ class HomePage extends State<Home> {
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.65,
+                height: size.height * 0.75,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -123,12 +124,12 @@ class HomePage extends State<Home> {
                               color: Colors.yellow,
                             ),
                             SizedBox(
-                              width: 5,
+                              width: 10,
                             ),
                             Text(
-                              credit.toString(),
+                              '${credit}',
                               style: TextStyle(
-                                color: Colors.orangeAccent,
+                                color: Colors.orangeAccent, fontSize: 17
                               ),
                             )
                           ],
@@ -156,7 +157,10 @@ class HomePage extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LinhVuc(Category: lstCategory, credit: credit,)),
+                              builder: (context) => LinhVuc(
+                                    Category: lstCategory,
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),
@@ -169,7 +173,7 @@ class HomePage extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistoryPage()),
+                              builder: (context) => RankPage(credit: credit,)),
                         );
                       },
                       child: buildButton(context, 'Lịch sử chơi'),
@@ -182,7 +186,7 @@ class HomePage extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistoryPage()),
+                              builder: (context) => HistoryPage(credit: credit,)),
                         );
                       },
                       child: buildButton(context, 'Xem xếp hạng'),

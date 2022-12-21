@@ -111,16 +111,16 @@ class FireStoreProvider {
   }
 
   // Lấy thông tin trả lời của người chơi
-  static Future<List<CatebyUserObject>> getUserbyQuiz() async {
+  static Future<List<QuizbyUserObject>> getUserbyQuiz() async {
     var user = FirebaseAuthService().user!;
     FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<CatebyUserObject> qbu = [];
+    List<QuizbyUserObject> qbu = [];
     var ref = _db.collection('QuizbyUser');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
 
-    qbu = data.map((d) => CatebyUserObject.fromJson(d)).toList();
-    qbu = qbu.where((element) => element.catetoryId == user.uid).toList();
+    qbu = data.map((d) => QuizbyUserObject.fromJson(d)).toList();
+    qbu = qbu.where((element) => element.userId == user.uid).toList();
 
     return qbu;
   }
@@ -147,12 +147,13 @@ class FireStoreProvider {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     List<UserRankObject> rank = [];
 
-    var ref = _db.collection('rank').orderBy('score', descending: true);
+    var ref = _db.collection('rank');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());
 
     rank = data.map((d) => UserRankObject.fromJson(d)).toList();
 
+    rank.sort((a, b) => a.score.compareTo(b.score));
     List<UserRankObject> subList = [];
     int startIndex = 0;
     int endIndex = 10;

@@ -172,7 +172,7 @@ class GamePageState extends State<GamePage> {
               width: 100,
               child: Column(
                 children: [
-                  Text("Game đã kết thúc", style: TextStyle(fontSize: 30, color: Colors.red),),
+                  Text("Game đã kết thúc", style: TextStyle(fontSize: 20, color: Colors.red),),
                 ],
               ),
             ),
@@ -527,7 +527,7 @@ class GamePageState extends State<GamePage> {
                   width: 10,
                 ),
                 Text(
-                  '2000',
+                  '${this.widget.credit}',
                   style: TextStyle(color: Colors.yellowAccent, fontSize: 20),
                 ),
               ],
