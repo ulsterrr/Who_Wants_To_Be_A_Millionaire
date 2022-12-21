@@ -8,6 +8,7 @@ import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/timebar_for_question.dart';
 
+import 'EndGame_page.dart';
 import 'Widget/button.dart';
 import 'dart:async';
 import 'dart:math';
@@ -159,11 +160,31 @@ class GamePageState extends State<GamePage> {
 
   void EndGame() {
     DateTime time = DateTime.now();
-    FireStoreProvider.gameToRank(number, time);
-    //KetQua kp = new KetQua(
-    //NguoiChoi: player!.MaNC, Diem: score, ThoiGian: time.toString());
-    //KetQuaDAO.insertKQ(kp);
-    //Navigator.pushNamed(context, "/Over", arguments: score);
+    FireStoreProvider.gameToRank(number, time).then((value) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Thông báo"),
+            content: Container(
+              // height: 200,
+              // width: 150,
+              child: Column(
+                children: [
+                  Text("Game đã kết thúc"),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "end", arguments: score);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      ));
   }
 
   // ignore: non_constant_identifier_names
@@ -174,7 +195,6 @@ class GamePageState extends State<GamePage> {
         colors[index] = 'choose';
       });
       timer!.cancel();
-      //ghi Nhận câu trả lời khi chọn đáp án
 
       var time = 1;
       timer2 = Timer.periodic(Duration(seconds: 1), (timer) {

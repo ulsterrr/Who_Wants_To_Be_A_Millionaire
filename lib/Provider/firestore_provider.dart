@@ -91,38 +91,41 @@ class FireStoreProvider {
   static Future<void> updateUserQuiz(QuizObject quiz, bool? isPass, int coutdown) {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
-    var ref = _db.collection('QuizbyUser').doc(user.uid);
+    var ref = _db.collection('QuizbyUser');
 
-    var data = {
+    var data = _db.collection('QuizbyUser').orderBy('id', descending: true).get();
+
+    var temp = {
       'id': FieldValue.increment(1),
       'userId': user.uid,
-      'quizId': FieldValue.arrayUnion([quiz.id]),
-      'quizChoice': FieldValue.arrayUnion([quiz.answer]),
+      'quizId': quiz.id,
+      'quizChoice': quiz.answer,
       'countFailed':
-          isPass == false ? FieldValue.increment(1) : FieldValue.increment(0),
+          isPass == false ? 1 : 0,
       'countSuccess':
-          isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
+          isPass == true ? 1 : 0,
       'atTime': coutdown.toString(),
     };
 
-    return ref.set(data, SetOptions(merge: true));
+    return ref.add(temp);
   }
 
   // Cập nhật thông tin xếp hạng của người chơi khi đã xong game
   static Future<void> gameToRank(int score, DateTime time) {
     FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
-    var ref = _db.collection('rank').doc(user.uid);
+    var ref = _db.collection('rank');
 
-    var data = {
+
+    var temp = {
       'id': FieldValue.increment(1),
       'userId': user.uid,
-      'fullName': FieldValue.arrayUnion([user.displayName]),
+      'fullName': user.displayName,
       'score': score,
-      'atTime': time.toString(),
+      'atTime': time.toString().substring(0, 19),
     };
 
-    return ref.set(data, SetOptions(merge: true));
+    return ref.add(temp);
   }
 
   // Lấy thông tin trả lời của người chơi
