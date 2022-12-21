@@ -128,7 +128,6 @@ class LinhVucPage extends State<LinhVuc> {
                                 MaterialPageRoute(
                                     builder: (context) => GamePage(quiz: lstQuiz,)),
                               ));
-                              
                             },
                             child: buildButton(
                               context,

@@ -6,6 +6,7 @@ import 'package:who_wants_to_be_a_millionaire/Object/catebyuser_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quizbyuser_obj.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/rank_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/authentication.dart';
 
 class FireStoreProvider {
@@ -154,5 +155,43 @@ class FireStoreProvider {
     };
 
     return ref.set(data, SetOptions(merge: true));
+  }
+
+  static Future<List<UserRankObject>> getUserRank() async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<UserRankObject> cate = [];
+
+    var ref = _db.collection('Rank');
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+
+    cate = data.map((d) => UserRankObject.fromJson(d)).toList();
+    cate.shuffle();
+
+    List<UserRankObject> subList = [];
+    int startIndex = 0;
+    int endIndex = 10;
+    subList = cate.sublist(startIndex, endIndex);
+
+    return subList;
+  }
+
+  static Future<List<UserRankObject>> getHistory() async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<UserRankObject> cate = [];
+
+    var ref = _db.collection('Rank');
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+
+    cate = data.map((d) => UserRankObject.fromJson(d)).toList();
+    cate.shuffle();
+
+    List<UserRankObject> subList = [];
+    int startIndex = 0;
+    int endIndex = 10;
+    subList = cate.sublist(startIndex, endIndex);
+
+    return subList;
   }
 }
