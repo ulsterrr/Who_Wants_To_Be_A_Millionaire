@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.695,
+                height: size.height * 0.65,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -53,8 +53,8 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     CircleAvatar(
                       radius: 50,
@@ -64,8 +64,8 @@ class HomePage extends StatelessWidget {
                           ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
                           : _auth.currentUser!.photoURL!),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -98,8 +98,8 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 15,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -111,8 +111,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Quản lý tài khoản'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -123,8 +123,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Trò chơi mới'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -136,8 +136,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Lịch sử chơi'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -149,8 +149,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Xem xếp hạng'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -161,8 +161,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: buildButton(context, 'Mua Credit'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: size.height * 0.01,
                     ),
                     buttonLogout(context),
                   ],

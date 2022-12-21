@@ -3,9 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/rank_obj.dart';
 
-class HistoryPage extends StatelessWidget {
+import '../Provider/firestore_provider.dart';
+
+class HistoryPage extends StatefulWidget {
+  @override
+  State<HistoryPage> createState() {
+    return HistoryPageState();
+  }
+}
+
+class HistoryPageState extends State<HistoryPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<UserRankObject> lstUser = [];
+
+  Future<void> getRank() async {
+    final data = await FireStoreProvider.getUserRank();
+    lstUser = data;
+    setState(() {});
+  }
+
   void click() {}
   @override
   Widget build(BuildContext context) {
@@ -78,16 +96,6 @@ class HistoryPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 400,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Container(
                       width: 300,
                       height: 300,
