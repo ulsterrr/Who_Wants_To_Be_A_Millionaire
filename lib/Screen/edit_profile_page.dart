@@ -145,7 +145,7 @@ class EditProfirePage extends StatelessWidget {
                             _auth.currentUser!.updatePassword(txtPass.text);
                             _auth.currentUser!.updateDisplayName(txtName.text);
 
-                            customDialog(context, 'Thông báo!',
+                            customDialogLogout(context, 'Thông báo!',
                                 'Cập nhật thành công!', false);
                           } catch (e) {
                             customDialog(

@@ -138,9 +138,7 @@ Widget buttonQuiz(BuildContext context, String title, String ans) {
 Widget buttonLogout(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      FirebaseAuth.instance.signOut();
-      GoogleSignIn().signOut();
-      Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
+      customDialogLogout(context, 'Thông báo', 'Bạn có muốn đăng xuất', true);
     },
     child: Container(
       alignment: Alignment.center,
