@@ -13,7 +13,8 @@ import 'dart:async';
 
 class LinhVuc extends StatefulWidget {
   List<CategoryObject> Category;
-  LinhVuc({required this.Category});
+  int credit;
+  LinhVuc({required this.Category, required this.credit});
 
   @override
   State<StatefulWidget> createState() { return LinhVucPage(); }
@@ -72,7 +73,7 @@ class LinhVucPage extends State<LinhVuc> {
                   width: 10,
                 ),
                 Text(
-                  '2000',
+                  this.widget.credit.toString(),
                   style: TextStyle(color: Colors.yellowAccent, fontSize: 20),
                 ),
               ],
@@ -126,7 +127,7 @@ class LinhVucPage extends State<LinhVuc> {
                               getLstQuiz(this.widget.Category[index].id).then((value) => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => GamePage(quiz: lstQuiz,)),
+                                    builder: (context) => GamePage(quiz: lstQuiz, credit: this.widget.credit,)),
                               ));
                             },
                             child: buildButton(

@@ -8,13 +8,15 @@ import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/timebar_for_question.dart';
 
+import 'EndGame_page.dart';
 import 'Widget/button.dart';
 import 'dart:async';
 import 'dart:math';
 
 class GamePage extends StatefulWidget {
   List<QuizObject> quiz;
-  GamePage({Key? key, required this.quiz}) : super(key: key);
+  int credit;
+  GamePage({Key? key, required this.quiz, required this.credit}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -159,11 +161,32 @@ class GamePageState extends State<GamePage> {
 
   void EndGame() {
     DateTime time = DateTime.now();
-    FireStoreProvider.gameToRank(number, time);
-    //KetQua kp = new KetQua(
-    //NguoiChoi: player!.MaNC, Diem: score, ThoiGian: time.toString());
-    //KetQuaDAO.insertKQ(kp);
-    //Navigator.pushNamed(context, "/Over", arguments: score);
+    FireStoreProvider.gameToRank(scores[number - 1], time).then((value) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Thông báo"),
+            content: Container(
+              alignment: Alignment.center,
+              height: 30,
+              width: 100,
+              child: Column(
+                children: [
+                  Text("Game đã kết thúc", style: TextStyle(fontSize: 30, color: Colors.red),),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "end", arguments: scores[number - 1]);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      ));
   }
 
   // ignore: non_constant_identifier_names
@@ -174,7 +197,6 @@ class GamePageState extends State<GamePage> {
         colors[index] = 'choose';
       });
       timer!.cancel();
-      //ghi Nhận câu trả lời khi chọn đáp án
 
       var time = 1;
       timer2 = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -439,6 +461,7 @@ class GamePageState extends State<GamePage> {
                   int pick = rd.nextInt(this.widget.quiz.length);
                   subList.add(this.widget.quiz[pick]);
                   this.widget.quiz.removeAt(pick);
+                  subList.removeAt(number);
                   Next();
 
                   skip = true;

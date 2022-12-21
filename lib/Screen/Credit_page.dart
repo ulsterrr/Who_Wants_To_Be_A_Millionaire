@@ -4,10 +4,52 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
 
-class CreditPage extends StatelessWidget {
+class Credit extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return CreditPage();
+  }
+}
+
+class CreditPage extends State<Credit> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  void click() {}
+  void click(int id, int qty) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Bạn có chắc chắn mua?"),
+            content: const Text("Giá rất mắc, bạn nên cân nhắc!"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  FireStoreProvider.buyCreditUser(id, qty)
+                      .then((value) => Navigator.of(context).pop(false));
+                }, //<-- SEE HERE
+                child: new Text('Cắn răng mua',
+                    style: TextStyle(color: Colors.red)),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                }, // <-- SEE HERE
+                child:
+                    new Text('Hết tiền', style: TextStyle(color: Colors.black)),
+              ),
+            ],
+          );
+        });
+  }
+
+  var diamond = [
+    2000,
+    5000,
+    10000,
+    20000,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +115,7 @@ class CreditPage extends StatelessWidget {
                   },
                   icon: Icon(Icons.exit_to_app_outlined)),
               const SizedBox(
-                height: 180,
+                height: 100,
               ),
               Neon(
                 text: 'Mua Credit',
@@ -87,13 +129,6 @@ class CreditPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    width: 400,
-                  ),
                   Container(
                     width: 325,
                     height: 380,
@@ -111,18 +146,23 @@ class CreditPage extends StatelessWidget {
                             mainAxisSpacing: 4.0),
                         itemBuilder: (BuildContext context, int index) {
                           // return Image.asset('images/avt1.jpg');
-                          return Card(
-                            color: Colors.orange,
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('5.000',
-                                      style: TextStyle(color: Colors.yellow)),
-                                  Expanded(
-                                      child: Icon(FontAwesomeIcons.gem,
-                                          size: 50.0, color: Colors.yellow)),
-                                ],
+                          return GestureDetector(
+                            onTap: () {
+                              click(1, diamond[index]);
+                            },
+                            child: Card(
+                              color: Colors.orange,
+                              child: Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('${diamond[index]}',
+                                        style: TextStyle(color: Colors.yellow)),
+                                    Expanded(
+                                        child: Icon(FontAwesomeIcons.gem,
+                                            size: 50.0, color: Colors.yellow)),
+                                  ],
+                                ),
                               ),
                             ),
                           );
