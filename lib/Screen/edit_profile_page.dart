@@ -43,7 +43,7 @@ class EditProfirePage extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.58,
+                height: size.height * 0.68,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),

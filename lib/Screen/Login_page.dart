@@ -53,13 +53,14 @@ class LoginPageState extends State<LoginPage> {
               ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: size.height * 0.16,
+                height: size.height * 0.1,
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.67,
+                height: size.height * 0.8,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
