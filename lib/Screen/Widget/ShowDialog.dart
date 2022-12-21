@@ -28,3 +28,32 @@ customDialog(BuildContext context, String tag, String title, bool color) {
     },
   );
 }
+
+customDialogPass(BuildContext context, String tag, String title) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          tag,
+          style:
+              TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () =>
+                Navigator.of(context).popUntil((route) => route.isFirst),
+            child: Text(
+              'OK',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
+      );
+    },
+  );
+}

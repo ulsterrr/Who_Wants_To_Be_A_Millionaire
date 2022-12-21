@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/Widget/ShowDialog.dart';
 
 class ForgotPage extends StatefulWidget {
   const ForgotPage({Key? key}) : super(key: key);
@@ -29,30 +30,10 @@ class ForgotPageState extends State<ForgotPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
-      final snackBar = SnackBar(
-        content: Text(
-          'Gửi Email đặt lại mật khẩu!',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-          ),
-        ),
-        backgroundColor: Colors.greenAccent,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      customDialogPass(
+          context, 'Thông báo!', 'Vui lòng kiểm tra hòm thư của bạn');
     } on FirebaseAuthException catch (e) {
-      final snackBar = SnackBar(
-        content: Text(
-          e.message.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-          ),
-        ),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      customDialog(context, 'Thông báo!', 'Email không tồn tại!', true);
     }
   }
 
@@ -129,46 +110,11 @@ class ForgotPageState extends State<ForgotPage> {
                     GestureDetector(
                       onTap: () async {
                         if (_emailController.text.isEmpty) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Chưa nhập email',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          customDialog(
+                              context, 'Thông báo!', 'Chưa nhập email', true);
                         } else if (!_emailController.text.contains('@')) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Thông báo',
-                                  style: TextStyle(
-                                      color: Colors.redAccent,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                content: Text(
-                                  'Định dạng Email không hợp lệ!',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text(
-                                      'OK',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              );
-                            },
-                          );
+                          customDialog(context, 'Thông báo!',
+                              'Định dạng Email không hợp lệ!', true);
                         }
                         resetPassword();
                       },
