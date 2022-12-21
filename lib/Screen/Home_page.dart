@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,24 +32,35 @@ class HomePage extends State<Home> {
     lstCategory = [];
     final data = await FireStoreProvider.getLinhVuc();
     lstCategory = data;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   Future<void> getCredit() async {
     final data = await FireStoreProvider.getUserCredit();
     credit = data;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
   void initState() {
     getLV();
     getCredit();
+    Timer(Duration(seconds: 1), () {
+      if (!_disposed)
+        setState(() {
+          time = time.add(Duration(seconds: -1));
+        });
+    });
     super.initState();
+  }
+
+  DateTime time = DateTime.now();
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 
   @override
@@ -129,8 +142,7 @@ class HomePage extends State<Home> {
                             Text(
                               '${credit}',
                               style: TextStyle(
-                                color: Colors.orangeAccent, fontSize: 17
-                              ),
+                                  color: Colors.orangeAccent, fontSize: 17),
                             )
                           ],
                         ),
@@ -173,7 +185,9 @@ class HomePage extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RankPage(credit: credit,)),
+                              builder: (context) => RankPage(
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Lịch sử chơi'),
@@ -186,7 +200,9 @@ class HomePage extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistoryPage(credit: credit,)),
+                              builder: (context) => HistoryPage(
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Xem xếp hạng'),
