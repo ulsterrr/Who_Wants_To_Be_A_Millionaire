@@ -55,6 +55,9 @@ class FireStoreProvider {
 
     quiz = data.map((d) => QuizObject.fromJson(d)).toList();
     quiz = quiz.where((element) => element.catetoryId == categoryId).toList();
+    //sắp ngẫu nhiên câu hỏi
+    quiz.shuffle();
+
     return quiz;
   }
 
@@ -86,7 +89,8 @@ class FireStoreProvider {
   }
 
   // Cập nhật thông tin trả lời của người chơi
-  Future<void> updateUserQuiz(QuizObject quiz, bool? isPass) {
+  static Future<void> updateUserQuiz(QuizObject quiz, bool? isPass, int coutdown) {
+    FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
     var ref = _db.collection('QuizbyUser').doc(user.uid);
 
@@ -99,7 +103,24 @@ class FireStoreProvider {
           isPass == false ? FieldValue.increment(1) : FieldValue.increment(0),
       'countSuccess':
           isPass == true ? FieldValue.increment(1) : FieldValue.increment(0),
-      'atTime': '60',
+      'atTime': coutdown.toString(),
+    };
+
+    return ref.set(data, SetOptions(merge: true));
+  }
+
+  // Cập nhật thông tin xếp hạng của người chơi khi đã xong game
+  static Future<void> gameToRank(int score, DateTime time) {
+    FirebaseFirestore _db = FirebaseFirestore.instance;
+    var user = FirebaseAuthService().user!;
+    var ref = _db.collection('rank').doc(user.uid);
+
+    var data = {
+      'id': FieldValue.increment(1),
+      'userId': user.uid,
+      'fullName': FieldValue.arrayUnion([user.displayName]),
+      'score': score,
+      'atTime': time.toString(),
     };
 
     return ref.set(data, SetOptions(merge: true));

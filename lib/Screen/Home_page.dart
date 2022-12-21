@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/Widget/button.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/profile_page.dart';
 
+import '../Object/category_obj.dart';
+import '../Provider/firestore_provider.dart';
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
@@ -14,8 +16,17 @@ import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<CategoryObject> lstCategory = [];
+  
+  Future<void> getLV() async {
+    lstCategory = [];
+    final data = await FireStoreProvider.getLinhVuc();
+    lstCategory = data;
+  }
+
   @override
   Widget build(BuildContext context) {
+    getLV();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +129,8 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LinhVuc()),
+                          MaterialPageRoute(
+                              builder: (context) => LinhVuc(Category: lstCategory,)),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),
