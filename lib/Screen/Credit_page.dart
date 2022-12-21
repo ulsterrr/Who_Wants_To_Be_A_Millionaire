@@ -41,6 +41,10 @@ class CreditPage extends State<Credit> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
+                  credit += qty;
+                  setState(() {
+                    
+                  });
                   FireStoreProvider.buyCreditUser(id, qty)
                       .then((value) => Navigator.of(context).pop(false));
                 }, //<-- SEE HERE
