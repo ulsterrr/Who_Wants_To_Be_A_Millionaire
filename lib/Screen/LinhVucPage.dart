@@ -33,6 +33,9 @@ class LinhVucPage extends State<LinhVuc> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      
+    });
   }
 
   @override
@@ -45,7 +48,7 @@ class LinhVucPage extends State<LinhVuc> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                width: 150,
+                width: 180,
                 //color: Colors.blueAccent,
                 child: Text(
                   textAlign: TextAlign.center,
