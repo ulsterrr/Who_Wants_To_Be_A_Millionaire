@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: size.height * 0.2,
+                height: size.height * 0.1,
               ),
               Container(
                 width: size.width * 0.8,
