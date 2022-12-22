@@ -17,7 +17,9 @@ class LinhVuc extends StatefulWidget {
   LinhVuc({required this.Category, required this.credit});
 
   @override
-  State<StatefulWidget> createState() { return LinhVucPage(); }
+  State<StatefulWidget> createState() {
+    return LinhVucPage();
+  }
 }
 
 class LinhVucPage extends State<LinhVuc> {
@@ -33,18 +35,17 @@ class LinhVucPage extends State<LinhVuc> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leadingWidth: 10,
           automaticallyImplyLeading: true,
           centerTitle: true,
-          title: Row( 
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
@@ -53,8 +54,8 @@ class LinhVucPage extends State<LinhVuc> {
                 child: Text(
                   textAlign: TextAlign.center,
                   _auth.currentUser!.displayName == null
-                      ? 'Người chơi: Username'
-                      : 'Người chơi: ' + _auth.currentUser!.displayName!,
+                      ? 'Người chơi'
+                      : _auth.currentUser!.displayName!,
                   style:
                       TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                 ),
@@ -123,15 +124,19 @@ class LinhVucPage extends State<LinhVuc> {
                         return Container(
                           padding: const EdgeInsets.fromLTRB(35, 5, 35, 5),
                           child: GestureDetector(
-                            onTap: () async{
+                            onTap: () async {
                               // gán rỗng cho mảng câu hỏi để load page ko bị trùng data khi chưa get kịp
                               lstQuiz = [];
                               // dùng then để nhận biết load xong data thì chuyển sang màn hình khác
-                              getLstQuiz(this.widget.Category[index].id).then((value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GamePage(quiz: lstQuiz, credit: this.widget.credit,)),
-                              ));
+                              getLstQuiz(this.widget.Category[index].id)
+                                  .then((value) => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => GamePage(
+                                                  quiz: lstQuiz,
+                                                  credit: this.widget.credit,
+                                                )),
+                                      ));
                             },
                             child: buildButton(
                               context,

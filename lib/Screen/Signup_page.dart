@@ -98,6 +98,7 @@ class SignupPage extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: txtEmail,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,

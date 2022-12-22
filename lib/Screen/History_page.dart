@@ -38,6 +38,7 @@ class HistoryPageState extends State<HistoryPage> {
   void click() {}
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 25,
@@ -102,8 +103,8 @@ class HistoryPageState extends State<HistoryPage> {
                 ])),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 150,
+                SizedBox(
+                  height: size.height * 0.4,
                 ),
                 Neon(
                   text: 'Xếp Hạng',
@@ -121,8 +122,11 @@ class HistoryPageState extends State<HistoryPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 350,
-                      height: 30,
+
+                      width: size.width * 0.8,
+                      height: size.height * 0.6,
+
+                    
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -175,6 +179,7 @@ class HistoryPageState extends State<HistoryPage> {
                     Container(
                       width: 350,
                       height: 300,
+
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
