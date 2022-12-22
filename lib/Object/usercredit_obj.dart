@@ -1,9 +1,9 @@
 class UserCreditObject {
   final int id;
-  final int userId;
+  final String userId;
   final int creditsId;
   final int quantity;
-  final DateTime buyTime;
+  final String buyTime;
 
   UserCreditObject(
       this.id, this.userId, this.creditsId, this.quantity, this.buyTime);

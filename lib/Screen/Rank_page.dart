@@ -5,40 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neon/neon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:who_wants_to_be_a_millionaire/Object/quizbyuser_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/rank_obj.dart';
 
 import '../Provider/firestore_provider.dart';
 
-class HistoryPage extends StatefulWidget {
+class RankPage extends StatefulWidget {
   int credit;
-  HistoryPage({required this.credit});
+  RankPage({required this.credit});
 
   @override
-  State<HistoryPage> createState() {
-    return HistoryPageState();
+  State<RankPage> createState() {
+    return RankPageState();
   }
 }
 
-class HistoryPageState extends State<HistoryPage> {
+class RankPageState extends State<RankPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  List<UserRankObject> lstUser = [];
-  
-  Future<void> getRank() async {
-    final data = await FireStoreProvider.getUserRank();
-    lstUser = data;
+  List<QuizbyUserObject> lst = [];
+
+  Future<void> getHIS() async {
+    final data = await FireStoreProvider.getUserbyQuiz();
+    lst = data;
     setState(() {});
   }
 
   @override
   void initState() {
-    getRank();
+    getHIS();
     super.initState();
   }
 
   void click() {}
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 25,
@@ -103,11 +103,11 @@ class HistoryPageState extends State<HistoryPage> {
                 ])),
             child: Column(
               children: [
-                SizedBox(
-                  height: size.height * 0.4,
+                const SizedBox(
+                  height: 150,
                 ),
                 Neon(
-                  text: 'Xếp Hạng',
+                  text: 'Lịch sử chơi',
                   color: Colors.red,
                   fontSize: 35,
                   font: NeonFont.NightClub70s,
@@ -122,11 +122,8 @@ class HistoryPageState extends State<HistoryPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-
-                      width: size.width * 0.8,
-                      height: size.height * 0.6,
-
-                    
+                      width: 350,
+                      height: 30,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -136,50 +133,36 @@ class HistoryPageState extends State<HistoryPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('Hạng'),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: 80,
+                            child: Text('Mã câu hỏi'),
                           ),
-                          const SizedBox(
-                            width: 5,
+                          Container(
+                            width: 90,
+                            alignment: Alignment.center,
+                            child: Text('Đáp án'),
                           ),
-                          Text('Avt'),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: 50,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Kết quả',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          const SizedBox(
-                            width: 10,
+                          Container(
+                            width: 60,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Thời gian',
+                            ),
                           ),
-                          Text('Tên NV'),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Ngày giờ',
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Điểm',
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          )
                         ],
                       ),
                     ),
                     Container(
                       width: 350,
                       height: 300,
-
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -187,7 +170,7 @@ class HistoryPageState extends State<HistoryPage> {
                             bottomRight: Radius.circular(10)),
                       ),
                       child: ListView.builder(
-                          itemCount: lstUser.length,
+                          itemCount: lst.length,
                           itemBuilder: (context, index) => Card(
                                 child: Container(
                                   width: 350,
@@ -196,46 +179,40 @@ class HistoryPageState extends State<HistoryPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      CircleAvatar(
-                                        maxRadius: 15,
-                                        child: Text((index + 1).toString()),
+                                      Container(
+                                        width: 50,
+                                        height: 35,
+                                        child: CircleAvatar(
+                                          maxRadius: 15,
+                                          child: Text(
+                                              lst[index].quizId.toString()),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 5,
+                                      Container(
+                                          width: 150,
+                                          alignment: Alignment.center,
+                                          child: Text(lst[index].quizChoice,
+                                              style: TextStyle(
+                                                  color: Colors.blue))),
+                                      Container(
+                                        width: 30,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            lst[index].countSuccess == 1
+                                                ? 'Đúng'
+                                                : 'Sai',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.green)),
                                       ),
-                                      CircleAvatar(
-                                        backgroundImage:
-                                            AssetImage('images/avt1.jpg'),
+                                      Container(
+                                        width: 50,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '${lst[index].atTime}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(lstUser[index].fullName,
-                                          style: TextStyle(color: Colors.blue)),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                          '${lstUser[index].atTime.substring(0, 10)} \n ${lstUser[index].atTime.substring(11, 19)}',
-                                          textAlign: TextAlign.center,
-                                          style:
-                                              TextStyle(color: Colors.green)),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '${lstUser[index].score}',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      )
                                     ],
                                   ),
                                 ),

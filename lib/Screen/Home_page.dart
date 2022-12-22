@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,22 +13,60 @@ import '../Provider/firestore_provider.dart';
 import 'Credit_page.dart';
 import 'History_page.dart';
 import 'LinhVucPage.dart';
+import 'Rank_page.dart';
 import 'Signup_page.dart';
 import 'profile_page.dart';
 
-class HomePage extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return HomePage();
+  }
+}
+
+class HomePage extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<CategoryObject> lstCategory = [];
-  
+  int credit = 0;
   Future<void> getLV() async {
     lstCategory = [];
     final data = await FireStoreProvider.getLinhVuc();
     lstCategory = data;
+    setState(() {});
+  }
+
+  Future<void> getCredit() async {
+    final data = await FireStoreProvider.getUserCredit();
+    credit = data;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getLV();
+    getCredit();
+    Timer(Duration(seconds: 1), () {
+      if (!_disposed)
+        setState(() {
+          time = time.add(Duration(seconds: -1));
+        });
+    });
+    super.initState();
+  }
+
+  DateTime time = DateTime.now();
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     getLV();
+    getCredit();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +96,11 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.8,
-                height: size.height * 0.69,
+
+                
+
+                height: size.height * 0.75,
+
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -97,13 +141,12 @@ class HomePage extends StatelessWidget {
                               color: Colors.yellow,
                             ),
                             SizedBox(
-                              width: 5,
+                              width: 10,
                             ),
                             Text(
-                              ' 2000',
+                              '${credit}',
                               style: TextStyle(
-                                color: Colors.orangeAccent,
-                              ),
+                                  color: Colors.orangeAccent, fontSize: 17),
                             )
                           ],
                         ),
@@ -130,7 +173,10 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LinhVuc(Category: lstCategory,)),
+                              builder: (context) => LinhVuc(
+                                    Category: lstCategory,
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Trò chơi mới'),
@@ -143,7 +189,9 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistoryPage()),
+                              builder: (context) => RankPage(
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Lịch sử chơi'),
@@ -156,7 +204,9 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HistoryPage()),
+                              builder: (context) => HistoryPage(
+                                    credit: credit,
+                                  )),
                         );
                       },
                       child: buildButton(context, 'Xem xếp hạng'),
@@ -168,7 +218,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CreditPage()),
+                          MaterialPageRoute(builder: (context) => Credit()),
                         );
                       },
                       child: buildButton(context, 'Mua Credit'),

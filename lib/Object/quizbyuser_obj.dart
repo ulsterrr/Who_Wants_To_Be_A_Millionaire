@@ -1,6 +1,6 @@
 class QuizbyUserObject {
   late final int id;
-  final int userId;
+  final String userId;
   final int quizId;
   final String quizChoice;
   final int countFailed;
@@ -9,7 +9,7 @@ class QuizbyUserObject {
 
   QuizbyUserObject(
       {this.id = 0,
-      this.userId = 0,
+      this.userId = '',
       this.quizId = 0,
       this.quizChoice = '',
       this.countFailed = 0,
