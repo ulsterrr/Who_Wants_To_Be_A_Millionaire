@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/category_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Object/quiz_obj.dart';
 import 'package:who_wants_to_be_a_millionaire/Provider/firestore_provider.dart';
+import 'package:who_wants_to_be_a_millionaire/Screen/parameter.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/timebar_for_question.dart';
 
 import 'EndGame_page.dart';
@@ -16,7 +17,8 @@ import 'dart:math';
 class GamePage extends StatefulWidget {
   List<QuizObject> quiz;
   int credit;
-  GamePage({Key? key, required this.quiz, required this.credit}) : super(key: key);
+  GamePage({Key? key, required this.quiz, required this.credit})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -161,32 +163,37 @@ class GamePageState extends State<GamePage> {
 
   void EndGame() {
     DateTime time = DateTime.now();
-    FireStoreProvider.gameToRank(scores[number - 1], time).then((value) => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Thông báo"),
-            content: Container(
-              alignment: Alignment.center,
-              height: 30,
-              width: 100,
-              child: Column(
-                children: [
-                  Text("Game đã kết thúc", style: TextStyle(fontSize: 20, color: Colors.red),),
-                ],
-              ),
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "end", arguments: scores[number - 1]);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      ));
+    FireStoreProvider.gameToRank(scores[number - 1], time)
+        .then((value) => showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Thông báo"),
+                  content: Container(
+                    alignment: Alignment.center,
+                    height: 30,
+                    width: 100,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Game đã kết thúc",
+                          style: TextStyle(fontSize: 20, color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "end",
+                            arguments: Parameter(scores[number - 1]));
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            ));
   }
 
   // ignore: non_constant_identifier_names
