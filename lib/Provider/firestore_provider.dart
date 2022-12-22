@@ -183,6 +183,7 @@ class FireStoreProvider {
   //lấy số tiền của user đã mua
   static Future<int> getUserCredit() async {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
+    var user = FirebaseAuthService().user!;
     List<UserCreditObject> credit = [];
 
     var ref = _db.collection('UserCredit');
@@ -193,6 +194,7 @@ class FireStoreProvider {
 
     int total_credit = 0;
     credit.forEach((element) { 
+      if(element.userId == user.uid)
       total_credit += element.quantity;
     });
 
