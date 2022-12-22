@@ -29,6 +29,20 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void click() {}
+  
+_googleSignIn(BuildContext context) async {
+  var user = await FirebaseAuthService().signInWithGoogle();
+  if (user != null) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      'home',
+      (route) => false,
+    );
+  } else {
+    customDialog(context, 'Đăng nhập thất bại', 'Lỗi đăng nhập!', true);
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -220,18 +234,5 @@ class LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-}
-
-_googleSignIn(BuildContext context) async {
-  var user = await FirebaseAuthService().signInWithGoogle();
-  if (user != null) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      'home',
-      (route) => false,
-    );
-  } else {
-    customDialog(context, 'Đăng nhập thất bại', 'Lỗi đăng nhập!', true);
   }
 }
