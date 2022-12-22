@@ -506,13 +506,13 @@ class GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                width: 150,
+                width: 200,
                 //color: Colors.blueAccent,
                 child: Text(
                   textAlign: TextAlign.center,
                   _auth.currentUser!.displayName == null
                       ? 'Người chơi: Username'
-                      : 'Người chơi: ' + _auth.currentUser!.displayName!,
+                      : _auth.currentUser!.displayName!,
                   style:
                       TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                 ),
