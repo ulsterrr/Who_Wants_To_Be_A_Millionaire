@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:who_wants_to_be_a_millionaire/Screen/Home_page.dart';
 
+import 'parameter.dart';
+
 class EndGame extends StatelessWidget {
-  int? score;
-  EndGame({this.score});
+  const EndGame({super.key});
+  @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Parameter;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 63, 77, 234),
       body: Container(
@@ -13,7 +16,7 @@ class EndGame extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Bạn được ${score} VNĐ\nXin chúc mừng",
+              Text("Bạn được ${args.score} VNĐ\nXin chúc mừng",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 25, color: Colors.white)),
               Image.asset("images/helper/congrats.gif"),

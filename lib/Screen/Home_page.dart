@@ -96,7 +96,11 @@ class HomePage extends State<Home> {
               ),
               Container(
                 width: size.width * 0.8,
+
+                
+
                 height: size.height * 0.75,
+
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
