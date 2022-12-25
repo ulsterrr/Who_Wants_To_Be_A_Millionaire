@@ -153,7 +153,7 @@ class FireStoreProvider {
 
     rank = data.map((d) => UserRankObject.fromJson(d)).toList();
 
-    rank.sort((a, b) => a.score.compareTo(b.score));
+    rank.sort((a, b) => b.score.compareTo(a.score));
     List<UserRankObject> subList = [];
     int startIndex = 0;
     int endIndex = 10;
@@ -185,7 +185,7 @@ class FireStoreProvider {
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     var user = FirebaseAuthService().user!;
     List<UserCreditObject> credit = [];
-
+    
     var ref = _db.collection('UserCredit');
     var snapshot = await ref.get();
     var data = snapshot.docs.map((s) => s.data());

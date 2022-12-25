@@ -38,7 +38,7 @@ Widget buttonQuiz(BuildContext context, String title, String ans) {
     Color.fromARGB(255, 20, 133, 148),
     Color.fromARGB(255, 2, 55, 99),
   ];
-  if(ans == 'df') {
+  if (ans == 'df') {
     return Container(
       alignment: Alignment.center,
       height: 55,
@@ -58,7 +58,7 @@ Widget buttonQuiz(BuildContext context, String title, String ans) {
         ),
       ),
     );
-  } else if(ans == 'true'){
+  } else if (ans == 'true') {
     return Container(
       alignment: Alignment.center,
       height: 55,
@@ -82,8 +82,7 @@ Widget buttonQuiz(BuildContext context, String title, String ans) {
         ),
       ),
     );
-  }
-  else if(ans == 'choose') {
+  } else if (ans == 'choose') {
     return Container(
       alignment: Alignment.center,
       height: 55,
@@ -107,8 +106,7 @@ Widget buttonQuiz(BuildContext context, String title, String ans) {
         ),
       ),
     );
-  }
-  else {
+  } else {
     return Container(
       alignment: Alignment.center,
       height: 55,
@@ -170,10 +168,10 @@ Widget buildButtonLogin(
   return GestureDetector(
     onTap: () async {
       try {
-        final newUser = FirebaseAuth.instance
+        final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: pass);
-        FirebaseAuth.instance.authStateChanges().listen((event) {
-          if (event != null) {
+        FirebaseAuth.instance.userChanges().listen((User? user) {
+          if (user != null) {
             Navigator.pushNamedAndRemoveUntil(
               context,
               'home',
@@ -184,9 +182,28 @@ Widget buildButtonLogin(
                 'Email hoặc mật khẩu không đúng', true);
           }
         });
-      } catch (e) {
-        customDialog(context, 'Đăng nhập thất bại', 'Lỗi kết nối!', true);
+        // FirebaseAuth.instance.authStateChanges().listen((event) {
+        //   if (event != null) {
+        //     Navigator.pushNamedAndRemoveUntil(
+        //       context,
+        //       'home',
+        //       (route) => false,
+        //     );
+        //   } else {
+        //     customDialog(context, 'Đăng nhập thất bại',
+        //         'Email hoặc mật khẩu không đúng', true);
+        //   }
+        // });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          customDialog(context, 'Đăng nhập thất bại',
+              'Email hoặc mật khẩu không đúng', true);
+        } else if (e.code == 'wrong-password') {
+          customDialog(
+              context, 'Đăng nhập thất bại', 'Mật khẩu không đúng', true);
+        }
       }
+      return null;
     },
     child: Container(
       alignment: Alignment.center,

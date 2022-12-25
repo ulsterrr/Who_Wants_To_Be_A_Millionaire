@@ -186,7 +186,7 @@ class GamePageState extends State<GamePage> {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, "end",
-                            arguments: Parameter(scores[number - 1]));
+                            arguments: Parameter(scores[number - 2]));
                       },
                       child: Text('OK'),
                     ),
