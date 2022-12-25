@@ -22,7 +22,7 @@ class HistoryPage extends StatefulWidget {
 class HistoryPageState extends State<HistoryPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<UserRankObject> lstUser = [];
-  
+
   Future<void> getRank() async {
     final data = await FireStoreProvider.getUserRank();
     lstUser = data;
@@ -38,7 +38,6 @@ class HistoryPageState extends State<HistoryPage> {
   void click() {}
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 25,
@@ -103,8 +102,8 @@ class HistoryPageState extends State<HistoryPage> {
                 ])),
             child: Column(
               children: [
-                SizedBox(
-                  height: size.height * 0.4,
+                const SizedBox(
+                  height: 150,
                 ),
                 Neon(
                   text: 'Xếp Hạng',
@@ -122,11 +121,8 @@ class HistoryPageState extends State<HistoryPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-
-                      width: size.width * 0.8,
-                      height: size.height * 0.6,
-
-                    
+                      width: 350,
+                      height: 30,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -134,52 +130,47 @@ class HistoryPageState extends State<HistoryPage> {
                             topRight: Radius.circular(10)),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('Hạng'),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: 35,
+                            alignment: Alignment.centerLeft,
+                            child: Text('Hạng'),
                           ),
-                          const SizedBox(
-                            width: 5,
+                          Container(
+                            width: 50,
+                            alignment: Alignment.centerLeft,
+                            child: Text('Avt'),
                           ),
-                          Text('Avt'),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: 70,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Tên NV',
+                              textAlign: TextAlign.left,
+                            ),
                           ),
-                          const SizedBox(
-                            width: 10,
+                          Container(
+                            width: 60,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Ngày giờ',
+                            ),
                           ),
-                          Text('Tên NV'),
-                          const SizedBox(
-                            height: 10,
+                          Container(
+                            width: 60,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Điểm',
+                            ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Ngày giờ',
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Điểm',
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          )
                         ],
                       ),
                     ),
                     Container(
                       width: 350,
                       height: 300,
-
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -196,46 +187,51 @@ class HistoryPageState extends State<HistoryPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      CircleAvatar(
-                                        maxRadius: 15,
-                                        child: Text((index + 1).toString()),
+                                      Container(
+                                        width: 30,
+                                        height: 25,
+                                        alignment: Alignment.centerLeft,
+                                        child: CircleAvatar(
+                                          maxRadius: 15,
+                                          child: Text((index + 1).toString()),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 5,
+                                      Container(
+                                        width: 50,
+                                        height: 55,
+                                        alignment: Alignment.centerLeft,
+                                        child: CircleAvatar(
+                                          maxRadius: 15,
+                                          child: CircleAvatar(
+                                            backgroundImage:
+                                                AssetImage('images/avt1.jpg'),
+                                          ),
+                                        ),
                                       ),
-                                      CircleAvatar(
-                                        backgroundImage:
-                                            AssetImage('images/avt1.jpg'),
+                                      Container(
+                                        width: 100,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(lstUser[index].fullName,
+                                            style:
+                                                TextStyle(color: Colors.blue)),
                                       ),
-                                      const SizedBox(
-                                        width: 10,
+                                      Container(
+                                        width: 80,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            '${lstUser[index].atTime.substring(0, 10)} \n ${lstUser[index].atTime.substring(11, 19)}',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.green)),
                                       ),
-                                      Text(lstUser[index].fullName,
-                                          style: TextStyle(color: Colors.blue)),
-                                      const SizedBox(
-                                        height: 10,
+                                      Container(
+                                        width: 50,
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          '${lstUser[index].score}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                          '${lstUser[index].atTime.substring(0, 10)} \n ${lstUser[index].atTime.substring(11, 19)}',
-                                          textAlign: TextAlign.center,
-                                          style:
-                                              TextStyle(color: Colors.green)),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '${lstUser[index].score}',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      )
                                     ],
                                   ),
                                 ),
