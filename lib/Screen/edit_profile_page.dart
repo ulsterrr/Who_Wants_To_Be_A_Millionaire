@@ -135,23 +135,37 @@ class EditProfirePage extends StatelessWidget {
                         if (txtPass.text != txtCPass.text) {
                           customDialog(context, 'Thông báo!',
                               'Mật khẩu không trùng khớp!', true);
-                        } else if (txtName.text.isEmpty &&
+                          return;
+                        }
+                        if (txtName.text.isEmpty &&
                             txtCPass.text.isEmpty &&
                             txtPass.text.isEmpty) {
                           customDialog(context, 'Thông báo!',
                               'Vui lòng nhập thông tin!', true);
-                        } else {
+                          return;
+                        }
+                        if (txtPass.text.length < 6 &&
+                            txtCPass.text.length < 6 &&
+                            txtPass.text.isNotEmpty) {
+                          customDialog(context, 'Thông báo!',
+                              'Mật khẩu ít nhất 6 ký tự!', true);
+                              return;
+                        }
                           try {
-                            _auth.currentUser!.updatePassword(txtPass.text);
-                            _auth.currentUser!.updateDisplayName(txtName.text);
+                            if (txtName.text.isNotEmpty) {
+                              _auth.currentUser!.updatePassword(txtPass.text);
+                              _auth.currentUser!
+                                  .updateDisplayName(txtName.text);
+                            } else {
+                              _auth.currentUser!.updatePassword(txtPass.text);
+                            }
 
-                            customDialogLogout(context, 'Thông báo!',
+                            customDialog(context, 'Thông báo!',
                                 'Cập nhật thành công!', false);
                           } catch (e) {
                             customDialog(
                                 context, 'Thông báo!', 'Có lỗi xảy ra!', true);
                           }
-                        }
                       },
                       child: Container(
                         alignment: Alignment.center,
