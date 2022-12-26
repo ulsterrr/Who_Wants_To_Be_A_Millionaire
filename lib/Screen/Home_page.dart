@@ -28,6 +28,7 @@ class HomePage extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<CategoryObject> lstCategory = [];
   int credit = 0;
+  
   Future<void> getLV() async {
     lstCategory = [];
     final data = await FireStoreProvider.getLinhVuc();
