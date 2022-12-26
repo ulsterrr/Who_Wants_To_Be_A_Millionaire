@@ -163,7 +163,7 @@ class GamePageState extends State<GamePage> {
 
   void EndGame() {
     DateTime time = DateTime.now();
-    FireStoreProvider.gameToRank(scores[number - 1], time)
+    FireStoreProvider.gameToRank(scores[number - 2], time)
         .then((value) => showDialog(
               context: context,
               builder: (BuildContext context) {

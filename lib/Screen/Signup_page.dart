@@ -167,11 +167,11 @@ class SignupPage extends StatelessWidget {
                           customDialog(context, 'Thông báo!',
                               'Vui lòng nhập đủ thông tin!', true);
                         }
-                        if (txtPass.text != txtCPass.text|| txtEmail.text.isNotEmpty|| txtName.text.isNotEmpty) {
+                        if (txtPass.text != txtCPass.text&&txtEmail.text.isNotEmpty&& txtName.text.isNotEmpty) {
                           customDialog(context, 'Thông báo!',
                               'Mật khẩu không trùng khớp!', true);
                         } else if (txtPass.text.length < 6 &&
-                            txtCPass.text.length < 6||txtEmail.text.isNotEmpty|| txtName.text.isNotEmpty) {
+                            txtCPass.text.length < 6&&txtEmail.text.isNotEmpty&& txtName.text.isNotEmpty) {
                           customDialog(context, 'Thông báo!',
                               'Mật khẩu ít nhất 6 ký tự!', true);
                         } else {
